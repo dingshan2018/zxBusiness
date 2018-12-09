@@ -1,0 +1,188 @@
+@charset "UTF-8";
+
+/* 重置元素属性与公共样式
+ ********************/
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+a:link,
+a:visited,
+a:hover,
+a:active {
+  outline: none;
+  text-decoration: none;
+  color: inherit;
+}
+
+a,
+button,
+input,
+textarea {
+  border: none;
+  touch-action: manipulation;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+ul,
+li {
+  list-style: none;
+  padding-left: 0;
+}
+
+html,
+body {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  margin: 0 auto;
+  /*padding: constant(safe-area-inset-top) constant(safe-area-inset-right) constant(safe-area-inset-bottom) constant(safe-area-inset-left);*/
+  /*padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);*/
+  line-height: 1;
+  font-family: -apple-system, 'PingFang SC Medium', 'Helvetica Neue', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  background-color: #fff;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+.scrolling-touch {
+  /* 使移动端滚动流畅 */
+  -webkit-overflow-scrolling: touch;
+}
+
+.block__clear-both::before,
+.block__clear-both::after {
+  content: '';
+  display: table;
+  width: 0;
+  height: 0;
+  visibility: hidden;
+}
+
+.block__clear-both::after {
+  clear: both;
+}
+
+/* app内容
+  ********************/
+[v-cloak] {
+  display: none;
+}
+
+#app {
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: 720Px;
+  height: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+  user-select: none;
+}
+
+#iosStatusBar {
+  z-index: 1000;
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background: #fff;
+  overflow: hidden;
+}
+
+.page-view {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 50px);
+  background: #fff;
+  overflow: hidden;
+}
+
+.page-view[full]{
+  height: 100%;
+}
+
+.page-content {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 46px);
+  overflow: hidden;
+}
+
+.page-content[full]{
+  height: 100%;
+}
+
+.nav-bar {
+  height: 46px;
+}
+
+.menu-tab {
+  height: 50px;
+}
+
+/* 重写组件样式
+ ********************/
+
+.nav-bar .van-nav-bar,
+.menu-tab .van-tabbar {
+  /* 顶部导航和底部menu的z-index设为100 */
+  z-index: 100;
+}
+
+.van-modal {
+  z-index: 2000 !important;
+}
+
+.van-nav-bar .van-icon,
+.van-nav-bar__text {
+  color: #333;
+}
+
+.van-dialog {
+  width: 270px;
+  border-radius: 7px;
+}
+
+.van-dialog__header {
+  font-size: 18px;
+  color: #000;
+}
+
+.van-dialog__message--has-title {
+  font-size: 15px;
+  color: #888;
+}
+
+.van-dialog .van-button {
+  font-size: 18px;
+}
+
+.van-dialog .van-dialog__confirm,
+.van-dialog .van-dialog__confirm:active {
+  color: #00c292;
+}
+
+.van-pull-refresh,
+.van-pull-refresh__track {
+  height: 100%;
+  overflow: auto;
+}
