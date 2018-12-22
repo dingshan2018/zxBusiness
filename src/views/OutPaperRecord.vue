@@ -10,7 +10,13 @@
     <scroll-view>
       <div class="chart">
         <div class="chart__title">出纸记录排名：</div>
-        <canvas id="chartCanvas"></canvas>
+        <canvas v-if="outPaperRecordRanking.length" id="chartCanvas"></canvas>
+        <div v-if="!outPaperRecordRanking.length" v-cloak class="block__null">
+          <div class="no-data__content">
+            <img class="no-data__img" src="../assets/img/icon__null.svg" alt="暂无数据">
+            <p class="no-data__text">暂无数据</p>
+          </div>
+        </div>
       </div>
 
       <table-list :columns="tableColumns" :data="tableData"></table-list>

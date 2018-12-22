@@ -58,7 +58,7 @@
       scrollBind (targer) {
         let scrollTop = targer.scrollTop;
         if (this.viewScrollHeight - (this.viewOffsetHeight + scrollTop) <= 50) {
-          console.log('触底刷新')
+          // console.log('触底刷新')
         }
       }
     },

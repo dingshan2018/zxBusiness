@@ -28,8 +28,9 @@ import "lib-flexible";
 
 import "../public/base.css";
 
-/*import VConsole from 'vconsole';
-process.env.NODE_ENV === 'development' ? new VConsole() : false;*/
+/*import VConsole from "vconsole";
+
+process.env.NODE_ENV === "development" ? new VConsole() : false;*/
 
 Vue.config.productionTip = false;
 
@@ -62,7 +63,10 @@ Vue.use(Row)
   .use(Field)
   .use(CellGroup)
   .use(Dialog)
-  .use(Lazyload)
+  .use(Lazyload, {
+    loading: "./img/icon__loading.svg",
+    lazyComponent: true
+  })
   .use(Loading)
   .use(Toast)
   .use(Picker)

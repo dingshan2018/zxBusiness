@@ -4,79 +4,59 @@
     <section class="user-info van-hairline--bottom">
       <img class="user-info__bg--blur" :src="wxUserBaseInfo.headImg"/>
       <div class="user-info__content block__clear-both">
-        <img class="user-info__avatar" :src="wxUserBaseInfo.headImg">
+        <img class="user-info__avatar" :src="wxUserBaseInfo.headImg"/>
         <p class="user-info__name van-ellipsis animated">{{wxUserBaseInfo.name}}</p>
       </div>
+      <div class="block__loading" v-if="!wxUserBaseInfo.headImg"></div>
     </section>
 
     <!-- 菜单 -->
-    <van-row class="menu-section" v-if="menuLimit.length">
-      <van-col class="menu-item"
-               span="8"
-               v-if="menuLimitHas('settle:userIncome:view')">
+    <section class="menu-section" ref="menuSection">
+      <div class="menu-item van-col--8" ref="menuItem" v-if="menuLimitHas('settle:userIncome:view')">
         <router-link to="/ProfitCount">
-          <span class="menu-item__icon">
-            <van-icon name="setting"/>
-          </span>
-          <span class="menu-item__name">收益统计</span>
+          <img class="menu-item__icon" src="../assets/img/收益统计.png"/>
+          <span class="menu-item__name van-ellipsis">收益统计</span>
         </router-link>
-      </van-col>
-      <van-col class="menu-item"
-               span="8"
-               v-if="menuLimitHas('business:place:view')">
+      </div>
+      <div class="menu-item van-col--8" ref="menuItem" v-if="menuLimitHas('business:place:view')">
         <router-link to="/PlaceList">
-          <span class="menu-item__icon">
-            <van-icon name="setting"/>
-          </span>
-          <span class="menu-item__name">场所列表</span>
+          <img class="menu-item__icon" src="../assets/img/场所列表.png"/>
+          <span class="menu-item__name van-ellipsis">场所列表</span>
         </router-link>
-      </van-col>
-      <van-col class="menu-item"
-               span="8"
-               v-if="menuLimitHas('business:device:view')">
+      </div>
+      <div class="menu-item van-col--8" ref="menuItem" v-if="menuLimitHas('business:device:view')">
         <router-link to="/DeviceRelease">
-          <span class="menu-item__icon">
-            <van-icon name="setting"/>
-          </span>
-          <span class="menu-item__name">设备投放</span>
+          <img class="menu-item__icon" src="../assets/img/设备投放.png"/>
+          <span class="menu-item__name van-ellipsis">设备投放</span>
         </router-link>
-      </van-col>
-      <van-col class="menu-item"
-               span="8"
-               v-if="menuLimitHas('advertise:adSchedule:view')">
+      </div>
+      <div class="menu-item van-col--8" ref="menuItem" v-if="menuLimitHas('advertise:adSchedule:view')">
         <router-link to="/AdPlan">
-          <span class="menu-item__icon">
-            <van-icon name="setting"/>
-          </span>
-          <span class="menu-item__name">广告计划</span>
+          <img class="menu-item__icon" src="../assets/img/广告计划.png">
+          <span class="menu-item__name van-ellipsis">广告计划</span>
         </router-link>
-      </van-col>
-      <van-col class="menu-item"
-               span="8"
-               v-if="menuLimitHas('business:tissueRecord:view')">
+      </div>
+      <div class="menu-item van-col--8" ref="menuItem" v-if="menuLimitHas('business:tissueRecord:view')">
         <router-link to="/OutPaperRecord">
-          <span class="menu-item__icon">
-            <van-icon name="setting"/>
-          </span>
-          <span class="menu-item__name">出纸记录</span>
+          <img class="menu-item__icon" src="../assets/img/出纸记录.png"/>
+          <span class="menu-item__name van-ellipsis">出纸记录</span>
         </router-link>
-      </van-col>
-      <!--<van-col class="menu-item"
-               span="8"
-               v-if="menuLimitHas('business:device:view') || menuLimitHas('client:repair:view')">
+      </div>
+      <!--<div class="menu-item" v-if="menuLimitHas('business:device:view') || menuLimitHas('client:repair:view')">
         <router-link to="/ReplaceBoard">
           <span class="menu-item__icon">
             <van-icon name="setting"/>
           </span>
-          <span class="menu-item__name">设备换板</span>
+          <span class="menu-item__name van-ellipsis">设备换板</span>
         </router-link>
-      </van-col>-->
-    </van-row>
+      </div>-->
+      <div class="block__loading" v-if="!menuLimit.length"></div>
+    </section>
 
     <!-- 最近出纸记录 -->
     <div class="table-list__title van-ellipsis">最近记录：</div>
     <table-list :columns="tableColumns" :data="tableData"></table-list>
-    <van-row class="pagination" tag="ul">
+    <van-row class="pagination" tag="ul" v-if="tableData.length">
       <van-col span="12"
                tag="li"
                class="pagination__prev pagination__like van-ellipsis"
@@ -92,7 +72,6 @@
         <van-icon name="arrow"/>
       </van-col>
     </van-row>
-
   </scroll-view>
 </template>
 
@@ -103,6 +82,8 @@
     name: "Home",
     data () {
       return {
+        // 生命周期
+        lifecycle: -1,
         // 表格列
         tableColumns: [
           {
@@ -129,7 +110,17 @@
         limit: ""
       };
     },
-    computed: mapGetters(["userInfo", "wxUserBaseInfo", "menuLimit"]),
+    computed: {
+      ...mapGetters(["userInfo", "wxUserBaseInfo", "menuLimit"])
+    },
+    watch: {
+      "menuLimit": function (newV, oldV) {
+        this.$nextTick(function () {
+
+          console.log(this.$refs);
+        });
+      }
+    },
     methods: {
       // 菜单权限判断
       menuLimitHas (value) {
@@ -219,43 +210,44 @@
   }
 
   .menu-section {
-    padding: 10px;
-    margin: 0 -10px;
-    /*border-bottom: 1px solid #eee;*/
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    transition: height .3s linear;
 
     .menu-item {
       display: flex;
       justify-content: center;
       align-items: center;
-      /*height: 70px;*/
-      /*line-height: 70px;*/
+      margin: 15px 0;
       text-align: center;
       overflow: hidden;
     }
 
     .menu-item__icon {
       display: block;
-      width: 50px;
-      height: 50px;
-      line-height: 50px;
+      width: 32px;
+      height: 32px;
       margin: 0 auto;
+      padding: 2px;
       border-radius: 4px;
-      font-size: 16px;
-      background: radial-gradient(50% 50%, circle cover, #f1f1f1 0, #f9f9f9 100%);
+      /*background: radial-gradient(50% 50%, circle cover, #f1f1f1 0, #f9f9f9 100%);*/
     }
 
     .menu-item__name {
       display: block;
       height: 20px;
       line-height: 20px;
-      margin: 10px auto;
+      margin-top: 8px;
       padding: 0 4px;
       font-weight: 600;
       font-size: 14px;
       color: #333;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
     }
 
     a {

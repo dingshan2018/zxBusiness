@@ -112,4 +112,34 @@
       margin-left: 10px;
     }
   }
+
+  .block__loading {
+    z-index: 10;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: url("./assets/img/icon__loading.svg") no-repeat center center/100% 15px #fff;
+  }
+
+  .block__null {
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: auto;
+    background: url("./assets/img/icon__null.svg") no-repeat center 70px/ auto 200px #fff;
+
+    .block__null-text {
+      position: absolute;
+      top: calc(70px + 100px);
+      left: calc(50% + 15px);
+      text-align: center;
+      font-size: 16px;
+      transform: translate(-50%, -50%);
+    }
+  }
 </style>
