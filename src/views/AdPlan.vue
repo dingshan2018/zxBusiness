@@ -9,10 +9,15 @@
 
     <scroll-view>
       <div class="chart">
-        <div class="chart__title">广告点击量排名：</div>
-        <canvas id="chartCanvas"></canvas>
+        <div class="block__model-title van-hairline--top van-hairline--bottom van-ellipsis">广告点击量排名</div>
+        <canvas id="chartCanvas" v-if="adPlanClickRanking"></canvas>
+        <div class="block__loading" v-if="!adPlanClickRanking.length && !chartDataEmpty"></div>
+        <div class="block__null" v-if="!adPlanClickRanking.length && chartDataEmpty">
+          <span class="block__null-text">暂无数据</span>
+        </div>
       </div>
 
+      <div class="block__model-title van-hairline--top van-hairline--bottom van-ellipsis">广告点击量</div>
       <table-list :columns="tableColumns" :data="tableData"></table-list>
 
     </scroll-view>
@@ -27,6 +32,8 @@
       return {
         // 广告点击量排名
         adPlanClickRanking: [],
+        // 图表空数据
+        chartDataEmpty: false,
         // 表格列
         tableColumns: [
           {
@@ -54,40 +61,23 @@
         // 分页总条数
         totalCount: "",
         // 当前页
-        page: "",
+        page: 1,
         // 每页条数
-        limit: ""
+        limit: 50
       };
     },
     watch: {
-      // 设备列表变化刷新BScroll
-      list (newValue, oldValue) {
-        if (this.mainBScrollInstance !== null) {
-          this.mainBScrollInstance.refresh();
+      adPlanClickRanking: function (newV, oldV) {
+        if (!newV.length && !this.chartDataEmpty) {
+          this.chartDataEmpty = true;
+        } else {
+          this.chartDataEmpty = false;
         }
       }
     },
     methods: {
       // 图表
       initAdChart () {
-        /*let data1 = data || [
-          {
-            year: "广告 1",
-            sales: 38
-          }, {
-            year: "广告 2",
-            sales: 52
-          }, {
-            year: "广告 3",
-            sales: 61
-          }, {
-            year: "广告 4",
-            sales: 145
-          }, {
-            year: "广告 5",
-            sales: 48
-          }
-        ];*/
 
         let chart = new this.$f2.Chart({
           id: "chartCanvas",
@@ -132,8 +122,8 @@
       getAdPlanList (page, limit) {
         let _this = this;
         _this.$axios.post("/settle/settlementParam/selecadschedulelist", _this.$qs.stringify({
-          page: page || 1,
-          limit: limit || 5
+          page: _this.page,
+          limit: _this.limit
         })).then(function (response) {
           let data = response.data;
           if (!data) return;

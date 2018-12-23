@@ -11,34 +11,34 @@
     </section>
 
     <!-- 菜单 -->
-    <section class="menu-section" ref="menuSection">
-      <div class="menu-item van-col--8" ref="menuItem" v-if="menuLimitHas('settle:userIncome:view')">
+    <section class="menu-section" :class="isMenu ? 'menu-section--show' : false" ref="menuSection">
+      <div class="menu-item van-col--8" v-if="menuLimitHas('settle:userIncome:view')">
         <router-link to="/ProfitCount">
-          <img class="menu-item__icon" src="../assets/img/收益统计.png"/>
+          <img class="menu-item__icon" src="../assets/img/icon__ProfitCount.png"/>
           <span class="menu-item__name van-ellipsis">收益统计</span>
         </router-link>
       </div>
-      <div class="menu-item van-col--8" ref="menuItem" v-if="menuLimitHas('business:place:view')">
+      <div class="menu-item van-col--8" v-if="menuLimitHas('business:place:view')">
         <router-link to="/PlaceList">
-          <img class="menu-item__icon" src="../assets/img/场所列表.png"/>
+          <img class="menu-item__icon" src="../assets/img/icon__PlaceList.png"/>
           <span class="menu-item__name van-ellipsis">场所列表</span>
         </router-link>
       </div>
-      <div class="menu-item van-col--8" ref="menuItem" v-if="menuLimitHas('business:device:view')">
+      <div class="menu-item van-col--8" v-if="menuLimitHas('business:device:view')">
         <router-link to="/DeviceRelease">
-          <img class="menu-item__icon" src="../assets/img/设备投放.png"/>
+          <img class="menu-item__icon" src="../assets/img/icon__DeviceRelease.png"/>
           <span class="menu-item__name van-ellipsis">设备投放</span>
         </router-link>
       </div>
-      <div class="menu-item van-col--8" ref="menuItem" v-if="menuLimitHas('advertise:adSchedule:view')">
+      <div class="menu-item van-col--8" v-if="menuLimitHas('advertise:adSchedule:view')">
         <router-link to="/AdPlan">
-          <img class="menu-item__icon" src="../assets/img/广告计划.png">
+          <img class="menu-item__icon" src="../assets/img/icon__AdPlan.png">
           <span class="menu-item__name van-ellipsis">广告计划</span>
         </router-link>
       </div>
-      <div class="menu-item van-col--8" ref="menuItem" v-if="menuLimitHas('business:tissueRecord:view')">
+      <div class="menu-item van-col--8" v-if="menuLimitHas('business:tissueRecord:view')">
         <router-link to="/OutPaperRecord">
-          <img class="menu-item__icon" src="../assets/img/出纸记录.png"/>
+          <img class="menu-item__icon" src="../assets/img/icon__OutPaperRecord.png"/>
           <span class="menu-item__name van-ellipsis">出纸记录</span>
         </router-link>
       </div>
@@ -54,7 +54,7 @@
     </section>
 
     <!-- 最近出纸记录 -->
-    <div class="table-list__title van-ellipsis">最近记录：</div>
+    <div class="block__model-title van-hairline--top van-hairline--bottom van-ellipsis">最近出纸记录：</div>
     <table-list :columns="tableColumns" :data="tableData"></table-list>
     <van-row class="pagination" tag="ul" v-if="tableData.length">
       <van-col span="12"
@@ -82,8 +82,8 @@
     name: "Home",
     data () {
       return {
-        // 生命周期
-        lifecycle: -1,
+        // 用户是否有菜单
+        isMenu: false,
         // 表格列
         tableColumns: [
           {
@@ -105,9 +105,9 @@
         // 分页总条数
         totalCount: "",
         // 当前页
-        page: "",
+        page: 1,
         // 每页条数
-        limit: ""
+        limit: 5
       };
     },
     computed: {
@@ -115,10 +115,10 @@
     },
     watch: {
       "menuLimit": function (newV, oldV) {
-        this.$nextTick(function () {
-
-          console.log(this.$refs);
-        });
+        // 初始就进入
+        if (newV.length) {
+          this.menuHeight();
+        }
       }
     },
     methods: {
@@ -126,12 +126,25 @@
       menuLimitHas (value) {
         return this.menuLimit.indexOf(value) > -1;
       },
+      // 动态计算菜单的高度
+      menuHeight () {
+        let menuSection = this.$refs.menuSection;
+        this.$nextTick(function () {
+          if (menuSection.scrollHeight > 0) {
+            this.isMenu = true;
+            // 等DOM 更新循环结束再设置height
+            this.$nextTick(function () {
+              menuSection.style.height = menuSection.scrollHeight + "px";
+            });
+          }
+        });
+      },
       // 出纸记录
       getOutPagerRecord (page, limit) {
         let _this = this;
         _this.$axios.post("/settle/settlementParam/selectzxtissuerecordlist", _this.$qs.stringify({
-          page: page || 1,
-          limit: limit || 5
+          page: _this.page,
+          limit: _this.limit
         })).then(function (response) {
           let data = response.data;
           if (!data) return;
@@ -161,7 +174,14 @@
       }
     },
     created () {
+      // 获取最近出纸记录
       this.getOutPagerRecord();
+    },
+    mounted () {
+      // 从别的页面刷新进入
+      if (!this.isMenu && this.menuLimit) {
+        this.menuHeight();
+      }
     }
   };
 </script>
@@ -218,7 +238,10 @@
     height: 0;
     padding: 0;
     overflow: hidden;
-    transition: height .3s linear;
+    transition: height .3s ease-in;
+    &.menu-section--show {
+      padding: 15px 0;
+    }
 
     .menu-item {
       display: flex;
@@ -258,15 +281,6 @@
     .van-icon {
       vertical-align: middle;
     }
-  }
-
-  .table-list__title {
-    padding: 0 10px;
-    line-height: 40px;
-    text-align: left;
-    font-weight: 600;
-    font-size: 13px;
-    background-color: #f6f6f6;
   }
 
   .pagination {

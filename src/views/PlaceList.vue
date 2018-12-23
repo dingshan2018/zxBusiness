@@ -40,9 +40,9 @@
         // 分页总条数
         totalCount: "",
         // 当前页
-        page: "",
+        page: 1,
         // 每页条数
-        limit: ""
+        limit: 50
       };
     },
     methods: {
@@ -50,8 +50,8 @@
       getPlaceList (page, limit) {
         let _this = this;
         _this.$axios.post("/settle/settlementParam/selectzxplacelist", _this.$qs.stringify({
-          page: page || 1,
-          limit: limit || 5
+          page: _this.page,
+          limit: _this.limit
         })).then(function (response) {
           let data = response.data;
           if (!data) return;

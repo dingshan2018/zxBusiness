@@ -8,7 +8,7 @@
       @click-left="$router.back()"/>
 
     <scroll-view>
-      <table-list :columns="tableColumns" :data="tableData1"></table-list>
+      <table-list :columns="tableColumns" :data="tableData"></table-list>
     </scroll-view>
   </div>
 </template>
@@ -39,35 +39,12 @@
         ],
         // 表格数据
         tableData: [],
-        // 表格数据
-        tableData1: [
-          {"adIncome": 60.0, "serviceIncome": 0.0, "promotionIncome": 22.5, "coperatorName": "喜多多加盟商"},
-          {"adIncome": 0.0, "serviceIncome": 0.0, "promotionIncome": 2250.0, "coperatorName": "喜多多代理商"},
-          {"adIncome": 132.0, "serviceIncome": 0.0, "promotionIncome": 0.0, "coperatorName": "喜多多加盟商"},
-          {"adIncome": 40.0, "serviceIncome": 0.0, "promotionIncome": 0.0, "coperatorName": "喜多多加盟商"},
-          {"adIncome": 60.0, "serviceIncome": 0.0, "promotionIncome": 22.5, "coperatorName": "喜多多加盟商"},
-          {"adIncome": 0.0, "serviceIncome": 0.0, "promotionIncome": 2250.0, "coperatorName": "喜多多代理商"},
-          {"adIncome": 132.0, "serviceIncome": 0.0, "promotionIncome": 0.0, "coperatorName": "喜多多加盟商"},
-          {"adIncome": 40.0, "serviceIncome": 0.0, "promotionIncome": 0.0, "coperatorName": "喜多多加盟商"},
-          {"adIncome": 60.0, "serviceIncome": 0.0, "promotionIncome": 22.5, "coperatorName": "喜多多加盟商"},
-          {"adIncome": 0.0, "serviceIncome": 0.0, "promotionIncome": 2250.0, "coperatorName": "喜多多代理商"},
-          {"adIncome": 132.0, "serviceIncome": 0.0, "promotionIncome": 0.0, "coperatorName": "喜多多加盟商"},
-          {"adIncome": 40.0, "serviceIncome": 0.0, "promotionIncome": 0.0, "coperatorName": "喜多多加盟商"},
-          {"adIncome": 60.0, "serviceIncome": 0.0, "promotionIncome": 22.5, "coperatorName": "喜多多加盟商"},
-          {"adIncome": 0.0, "serviceIncome": 0.0, "promotionIncome": 2250.0, "coperatorName": "喜多多代理商"},
-          {"adIncome": 132.0, "serviceIncome": 0.0, "promotionIncome": 0.0, "coperatorName": "喜多多加盟商"},
-          {"adIncome": 40.0, "serviceIncome": 0.0, "promotionIncome": 0.0, "coperatorName": "喜多多加盟商"},
-          {"adIncome": 60.0, "serviceIncome": 0.0, "promotionIncome": 22.5, "coperatorName": "喜多多加盟商"},
-          {"adIncome": 0.0, "serviceIncome": 0.0, "promotionIncome": 2250.0, "coperatorName": "喜多多代理商"},
-          {"adIncome": 132.0, "serviceIncome": 0.0, "promotionIncome": 0.0, "coperatorName": "喜多多加盟商"},
-          {"adIncome": 40.0, "serviceIncome": 0.0, "promotionIncome": 0.0, "coperatorName": "喜多多加盟商"}
-        ],
         // 分页总条数
         totalCount: "",
         // 当前页
-        page: "",
+        page: 1,
         // 每页条数
-        limit: ""
+        limit: 50
       };
     },
     methods: {
@@ -75,8 +52,8 @@
       getProfitList (page, limit) {
         let _this = this;
         _this.$axios.post("/settle/settlementParam/selecuserincomelist", _this.$qs.stringify({
-          page: page || 1,
-          limit: limit || 5
+          page: _this.page,
+          limit: _this.limit
         })).then(function (response) {
           let data = response.data;
           if (!data) return;

@@ -34,27 +34,6 @@
             </div>
           </scroll-view>
         </div>
-
-        <!--<div class="field-query">
-          <van-field
-            v-model="deviceCode"
-            label="设备号"
-            placeholder="填写设备号"
-            required
-            clearable
-            @click.native.stop/>
-
-          <div class="field-query__list" v-show="queryListShow">
-            <ul @touchmove.stop>
-              <li class="field-query__item van-ellipsis van-hairline&#45;&#45;bottom"
-                  v-for="item in onlineDevice"
-                  :key="item.deviceId"
-                  @click.stop="onlineDeviceClick(item)">{{item.deviceSn}}
-              </li>
-            </ul>
-          </div>
-        </div>-->
-
       </van-cell-group>
 
       <van-button type="default"

@@ -9,16 +9,15 @@
 
     <scroll-view>
       <div class="chart">
-        <div class="chart__title">出纸记录排名：</div>
+        <div class="block__model-title van-hairline--top van-hairline--bottom van-ellipsis">出纸记录排名</div>
         <canvas v-if="outPaperRecordRanking.length" id="chartCanvas"></canvas>
-        <div v-if="!outPaperRecordRanking.length" v-cloak class="block__null">
-          <div class="no-data__content">
-            <img class="no-data__img" src="../assets/img/icon__null.svg" alt="暂无数据">
-            <p class="no-data__text">暂无数据</p>
-          </div>
+        <div class="block__loading" v-if="!outPaperRecordRanking.length && !chartDataEmpty"></div>
+        <div class="block__null" v-if="!outPaperRecordRanking.length && chartDataEmpty">
+          <span class="block__null-text">暂无数据</span>
         </div>
       </div>
 
+      <div class="block__model-title van-hairline--top van-hairline--bottom van-ellipsis">出纸记录</div>
       <table-list :columns="tableColumns" :data="tableData"></table-list>
 
     </scroll-view>
@@ -33,6 +32,8 @@
       return {
         // 出纸记录排名
         outPaperRecordRanking: [],
+        // 图表空数据
+        chartDataEmpty: false,
         // 表格列
         tableColumns: [
           {
@@ -54,16 +55,17 @@
         // 分页总条数
         totalCount: "",
         // 当前页
-        page: "",
+        page: 1,
         // 每页条数
-        limit: ""
+        limit: 50
       };
     },
     watch: {
-      // 设备列表变化刷新BScroll
-      list (newValue, oldValue) {
-        if (this.mainBScrollInstance !== null) {
-          this.mainBScrollInstance.refresh();
+      outPaperRecordRanking: function (newV, oldV) {
+        if (!newV.length && !this.chartDataEmpty) {
+          this.chartDataEmpty = true;
+        } else {
+          this.chartDataEmpty = false;
         }
       }
     },
@@ -114,8 +116,8 @@
       getAdPlanList (page, limit) {
         let _this = this;
         _this.$axios.post("/settle/settlementParam/selectzxtissuerecordlist", _this.$qs.stringify({
-          page: page || 1,
-          limit: limit || 5
+          page: _this.page,
+          limit: _this.limit
         })).then(function (response) {
           let data = response.data;
           if (!data) return;
@@ -144,15 +146,6 @@
     width: 100%;
     height: 200px;
     background-color: #fff;
-
-    .chart__title {
-      height: 40px;
-      line-height: 40px;
-      font-size: 13px;
-      font-weight: 600;
-      padding: 0 10px;
-      background-color: #f6f6f6;
-    }
 
     canvas {
       width: 100%;

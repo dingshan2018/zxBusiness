@@ -113,6 +113,14 @@
     }
   }
 
+  .block__model-title{
+    padding: 0 10px;
+    line-height: 30px;
+    font-size: 12px;
+    font-weight: 600;
+    background-color: #f6f6f6;
+  }
+
   .block__loading {
     z-index: 10;
     position: absolute;
@@ -140,6 +148,22 @@
       text-align: center;
       font-size: 16px;
       transform: translate(-50%, -50%);
+    }
+  }
+
+  .chart{
+    position: relative;
+
+    .block__null {
+      top: 30px;
+      background-position: center center;
+      background-size: auto 120px;
+    }
+
+    .block__null-text {
+      top: 50%;
+      font-size: 12px;
+      left: calc(50% + 10px);
     }
   }
 </style>
