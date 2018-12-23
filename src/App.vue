@@ -76,9 +76,9 @@
 
             if (data && data.code === 0) {
               // 菜单权限
-              // _this.setMenuLimit(data.msg ? data.msg.toString() : "");
-              _this.setMenuLimit(
-                "settle:userIncome:view,business:place:view,business:device:view,advertise:adSchedule:view,business:tissueRecord:view,business:device:view");
+              _this.setMenuLimit(data.msg ? data.msg.toString() : "");
+              // _this.setMenuLimit(
+              //   "settle:userIncome:view,business:place:view,business:device:view,advertise:adSchedule:view,business:tissueRecord:view,business:device:view");
               // 用户头像、名字
               _this.setWxUserBaseInfo({
                 name: data.name,
@@ -97,8 +97,8 @@
       }
     },
     created () {
-      // this.getWxUserInfo();
-      this.login();
+      this.getWxUserInfo();
+      // this.login();
     }
   };
 </script>
