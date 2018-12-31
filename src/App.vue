@@ -32,7 +32,6 @@
       getWxUserInfo () {
         let _this = this;
         let accessCode = _this.$util.getUrlParam("code");
-
         // 未授权
         if (!accessCode) {
           //获取授权code的回调地址，获取到code，直接返回到当前页
@@ -40,29 +39,28 @@
             encodeURIComponent(location.href) + "&response_type=code&scope=snsapi_userinfo&state=0#wechat_redirect";
         }
         else {
-          _this.$axios.get("/api/wx/userInfo", {
+          _this.$axios.get("/wx/userInfo", {
             params: {
               code: accessCode,
               state: 0
             }
           }).then(function (response) {
             let data = response.data;
-
             // 用户信息
             if (data && data.userInfo) {
               _this.setUserInfo(data.userInfo);
               _this.login();
             } else {
               _this.$dialog.alert({
-                title: "系统发生错误",
-                message: "错误码：xcAppWxUserInfoDataUserInfo"
+                title: "提示",
+                message: "用户信息获取错误，请确认是否已关注公众号，再重新进入"
               });
               _this.$router.push("/Error");
             }
           }).catch(function (error) {
             _this.$dialog.alert({
-              title: "系统发生错误",
-              message: "错误码：xcAppWxUserInfoCatch"
+              title: "提示",
+              message: "用户信息获取失败，请确认是否已关注公众号，再重新进入"
             });
             _this.$router.push("/Error");
           });
@@ -71,11 +69,12 @@
       // 登录
       login () {
         let _this = this;
-
         _this.$axios.post("/api/wxLogin", _this.$qs.stringify({
           //  || "ohZpd0tPFpAeGZweVQEuinaa5H8M"
           openId: _this.userInfo.openId
-        }))
+        }), {
+          withCredentials: true
+        })
           .then(function (response) {
             let data = response.data;
 
@@ -94,16 +93,16 @@
             }
             else {
               _this.$dialog.alert({
-                title: "系统发生错误",
-                message: "错误码：xcAppLoginDataCode"
+                title: "提示",
+                message: "请确认是否已绑定微信号、手机号、QQ号。可在\"我->设置->隐私->添加我的方式\"中查看并打开。"
               });
               _this.$router.push("/Error");
             }
 
           }).catch(function (error) {
           _this.$dialog.alert({
-            title: "系统发生错误",
-            message: "错误码：xcAppLoginCatch"
+            title: "提示",
+            message: "登录失败，请退出再重新进入"
           });
         });
       }

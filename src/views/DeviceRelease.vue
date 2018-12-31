@@ -108,7 +108,9 @@
 
         _this.$axios.post("/api/settle/settlementParam/selectdeviceAll", _this.$qs.stringify({
           deviceSn: _this.device.deviceSn
-        })).then(function (response) {
+        }), {
+          withCredentials: true
+        }).then(function (response) {
           let data = response.data;
 
           _this.fieldQueryData = data.list;
@@ -127,7 +129,9 @@
       getPlaceList () {
         let _this = this;
 
-        _this.$axios.post("/api/settle/settlementParam/selectplaceAll").then(function (response) {
+        _this.$axios.post("/api/settle/settlementParam/selectplaceAll", {}, , {
+          withCredentials: true
+        }).then(function (response) {
           let data = response.data;
 
           _this.placePickerColumns = data.list;
@@ -141,17 +145,17 @@
       // 提交确认按钮
       submitClick () {
         let _this = this;
-
         _this.$toast.loading({
           duration: 0,
           forbidClick: true,
           message: "加载中..."
         });
-
         _this.$axios.post("/api/settle/settlementParam/deviceSave", _this.$qs.stringify({
           deviceId: _this.device.deviceId,
           placeId: _this.place.placeId
-        })).then(function (response) {
+        }), {
+          withCredentials: true
+        }).then(function (response) {
 
         }).catch(function (error) {
           setTimeout(function () {

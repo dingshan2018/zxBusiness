@@ -78,18 +78,15 @@
     methods: {
       // 图表
       initAdChart () {
-
         let chart = new this.$f2.Chart({
           id: "chartCanvas",
           pixelRatio: window.devicePixelRatio
         });
-
         chart.source(this.adPlanClickRanking, {
           sales: {
             tickCount: 5
           }
         });
-
         chart.tooltip({
           showItemMarker: false,
           onShow: function onShow (ev) {
@@ -99,13 +96,14 @@
             // items[0].value = '¥ ' + items[0].value;
           }
         }).interval().position("name*num");
-
         chart.render();
       },
       // 广告点击量排名
       getAdPlanClickRanking () {
         let _this = this;
-        _this.$axios.post("/api/settle/settlementParam/scheduleStatistics").then(function (response) {
+        _this.$axios.post("/api/settle/settlementParam/scheduleStatistics", {}, {
+          withCredentials: true
+        }).then(function (response) {
           let data = response.data;
           if (!data) return;
 
@@ -116,7 +114,6 @@
         }).catch(function (error) {
 
         });
-
       },
       // 广告列表
       getAdPlanList (page, limit) {
@@ -124,7 +121,9 @@
         _this.$axios.post("/api/settle/settlementParam/selecadschedulelist", _this.$qs.stringify({
           page: _this.page,
           limit: _this.limit
-        })).then(function (response) {
+        }), {
+          withCredentials: true
+        }).then(function (response) {
           let data = response.data;
           if (!data) return;
 
@@ -132,7 +131,6 @@
           _this.page = data.page;
           _this.limit = data.limit;
           _this.tableData = data.list;
-
         }).catch(function (error) {
 
         });

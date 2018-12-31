@@ -88,16 +88,16 @@
         tableColumns: [
           {
             title: "设备名称",
-            key: "deviceName",
+            key: "deviceSn",
             width: "90px"
           },
           {
             title: "所在场所",
-            key: "place"
+            key: "placeName"
           },
           {
             title: "日期",
-            key: "time"
+            key: "TIME"
           }
         ],
         // 表格数据
@@ -130,11 +130,19 @@
       menuHeight () {
         let menuSection = this.$refs.menuSection;
         this.$nextTick(function () {
-          if (menuSection.scrollHeight > 0) {
+          if (menuSection.scrollHeight > 0 && menuSection.scrollHeight < 4) {
             this.isMenu = true;
             // 等DOM 更新循环结束再设置height
             this.$nextTick(function () {
-              menuSection.style.height = menuSection.scrollHeight + "px";
+              // menuSection.style.height = menuSection.scrollHeight + "px";
+              menuSection.style.height = "120px";
+            });
+          }else if (menuSection.scrollHeight >= 4) {
+            this.isMenu = true;
+            // 等DOM 更新循环结束再设置height
+            this.$nextTick(function () {
+              // menuSection.style.height = menuSection.scrollHeight + "px";
+              menuSection.style.height = "210px";
             });
           }
         });
@@ -145,7 +153,9 @@
         _this.$axios.post("/api/settle/settlementParam/selectzxtissuerecordlist", _this.$qs.stringify({
           page: _this.page,
           limit: _this.limit
-        })).then(function (response) {
+        }), {
+          withCredentials: true
+        }).then(function (response) {
           let data = response.data;
           if (!data) return;
 
@@ -156,8 +166,8 @@
 
         }).catch(function (error) {
           _this.$dialog.alert({
-            title: "系统发生错误",
-            message: "错误码：xcHomeSelectzxtissuerecordlistCatch"
+            title: "提示",
+            message: "最近出纸记录获取失败，请重新进入"
           });
         });
       },
@@ -243,6 +253,7 @@
     overflow: hidden;
     transition: height .3s ease-in;
     &.menu-section--show {
+      height: auto;
       padding: 15px 0;
     }
 

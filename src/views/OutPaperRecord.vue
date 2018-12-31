@@ -72,18 +72,15 @@
     methods: {
       // 图表
       initAdChart () {
-
         let chart = new this.$f2.Chart({
           id: "chartCanvas",
           pixelRatio: window.devicePixelRatio
         });
-
         chart.source(this.outPaperRecordRanking, {
           sales: {
             tickCount: 5
           }
         });
-
         chart.tooltip({
           showItemMarker: false,
           onShow: function onShow (ev) {
@@ -93,24 +90,22 @@
             // items[0].value = '¥ ' + items[0].value;
           }
         }).interval().position("name*num");
-
         chart.render();
       },
       // 出纸记录排名
       getAdPlanClickRanking () {
         let _this = this;
-        _this.$axios.post("/api/settle/settlementParam/tissuerecordStatistics").then(function (response) {
+        _this.$axios.post("/api/settle/settlementParam/tissuerecordStatistics", {}, {
+          withCredentials: true
+        }).then(function (response) {
           let data = response.data;
           if (!data) return;
 
           _this.outPaperRecordRanking = data.list;
-
           _this.initAdChart();
-
         }).catch(function (error) {
 
         });
-
       },
       // 出纸列表
       getAdPlanList (page, limit) {
@@ -118,7 +113,9 @@
         _this.$axios.post("/api/settle/settlementParam/selectzxtissuerecordlist", _this.$qs.stringify({
           page: _this.page,
           limit: _this.limit
-        })).then(function (response) {
+        }), {
+          withCredentials: true
+        }).then(function (response) {
           let data = response.data;
           if (!data) return;
 

@@ -19,11 +19,11 @@
   // @ is an alias to /src
 
   export default {
-    name   : "Login",
+    name: "Login",
     data () {
       return {
         userName: "",
-        userPsw : "",
+        userPsw: "",
         userInfo: {}
       };
     },
@@ -40,9 +40,9 @@
             encodeURIComponent(location.href) + "&response_type=code&scope=snsapi_userinfo&state=0#wechat_redirect";
         }
         else {
-          _this.$axios.get("/api/wx/userInfo", {
+          _this.$axios.get("/wx/userInfo", {
             params: {
-              code : accessCode,
+              code: accessCode,
               state: 0
             }
           }).then(function (response) {
@@ -66,15 +66,17 @@
         let _this = this;
 
         _this.$toast.loading({
-          duration   : 0,
+          duration: 0,
           forbidClick: true,
-          message    : "登录中..."
+          message: "登录中..."
         });
 
         _this.$axios.post("/api/wxLogin", _this.$qs.stringify({
           // ohZpd0tPFpAeGZweVQEuinaa5H8M
-          openId  : _this.userInfo.openId || 'ohZpd0tPFpAeGZweVQEuinaa5H8M'
-        })).then(function (response) {
+          openId: _this.userInfo.openId || "ohZpd0tPFpAeGZweVQEuinaa5H8M"
+        }), {
+          withCredentials: true
+        }).then(function (response) {
           let data = response.data;
           console.log(data);
           if (data.code === 0) {

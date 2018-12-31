@@ -86,7 +86,7 @@
       fieldQueryOnline () {
         let _this = this;
 
-        _this.$axios.post("/api/wx/queryOnlineDevice", _this.$qs.stringify({
+        _this.$axios.post("/wx/queryOnlineDevice", _this.$qs.stringify({
           params: {
             deviceCode: _this.deviceCode,
             deviceStatus: "02",
@@ -127,7 +127,7 @@
           message: "加载中..."
         });
 
-        _this.$axios.get("/api/wx/activeTerminal", {
+        _this.$axios.get("/wx/activeTerminal", {
           params: {
             userId: _this.userId,
             termCode: _this.termCode,

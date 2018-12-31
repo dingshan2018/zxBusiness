@@ -54,7 +54,9 @@
         _this.$axios.post("/api/settle/settlementParam/selecuserincomelist", _this.$qs.stringify({
           page: _this.page,
           limit: _this.limit
-        })).then(function (response) {
+        }), {
+          withCredentials: true
+        }).then(function (response) {
           let data = response.data;
           if (!data) return;
 

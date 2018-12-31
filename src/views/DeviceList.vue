@@ -27,7 +27,7 @@
           {
             title: "状态",
             key: "status",
-            width: '90px'
+            width: "90px"
           }
         ],
         // 表格数据
@@ -48,7 +48,9 @@
           page: _this.page,
           limit: _this.limit,
           placeId: _this.$route.query.placeId
-        })).then(function (response) {
+        }), {
+          withCredentials: true
+        }).then(function (response) {
           let data = response.data;
           if (!data) return;
 
