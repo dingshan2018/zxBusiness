@@ -129,7 +129,9 @@
       getPlaceList () {
         let _this = this;
 
-        _this.$axios.post("/api/settle/settlementParam/selectplaceAll", {}, , {
+        _this.$axios.post("/api/settle/settlementParam/selectplaceAll", {}, {
+          withCredentials: true
+        }, {
           withCredentials: true
         }).then(function (response) {
           let data = response.data;
