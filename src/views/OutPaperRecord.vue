@@ -104,7 +104,10 @@
           _this.outPaperRecordRanking = data.list;
           _this.initAdChart();
         }).catch(function (error) {
-
+          _this.$dialog.alert({
+            title: "提示",
+            message: "数据获取失败，请尝试重新进入"
+          });
         });
       },
       // 出纸列表
@@ -123,9 +126,11 @@
           _this.page = data.page;
           _this.limit = data.limit;
           _this.tableData = data.list;
-
         }).catch(function (error) {
-
+          _this.$dialog.alert({
+            title: "提示",
+            message: "数据获取失败，请尝试重新进入"
+          });
         });
       }
     },

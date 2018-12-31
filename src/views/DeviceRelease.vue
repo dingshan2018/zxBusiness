@@ -116,7 +116,6 @@
           _this.fieldQueryData = data.list;
         }).catch(function () {
           _this.$toast.fail("系统繁忙！");
-
         });
       },
       // 设备模糊查询选择
@@ -137,6 +136,11 @@
           let data = response.data;
 
           _this.placePickerColumns = data.list;
+        }).cache(function (error) {
+          _this.$dialog.alert({
+            title: "提示",
+            message: "数据获取失败，请尝试重新进入"
+          });
         });
       },
       // 场所选择确定

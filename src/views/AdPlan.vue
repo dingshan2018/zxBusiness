@@ -108,11 +108,12 @@
           if (!data) return;
 
           _this.adPlanClickRanking = data.list;
-
           _this.initAdChart();
-
         }).catch(function (error) {
-
+          _this.$dialog.alert({
+            title: "提示",
+            message: "数据获取失败，请尝试重新进入"
+          });
         });
       },
       // 广告列表
@@ -132,7 +133,10 @@
           _this.limit = data.limit;
           _this.tableData = data.list;
         }).catch(function (error) {
-
+          _this.$dialog.alert({
+            title: "提示",
+            message: "数据获取失败，请尝试重新进入"
+          });
         });
       }
     },

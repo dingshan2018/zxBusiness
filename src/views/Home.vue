@@ -135,14 +135,14 @@
             // 等DOM 更新循环结束再设置height
             this.$nextTick(function () {
               // menuSection.style.height = menuSection.scrollHeight + "px";
-              menuSection.style.height = "120px";
+              menuSection.style.height = "3.2rem"; // 120px
             });
           }else if (menuSection.scrollHeight >= 4) {
             this.isMenu = true;
             // 等DOM 更新循环结束再设置height
             this.$nextTick(function () {
               // menuSection.style.height = menuSection.scrollHeight + "px";
-              menuSection.style.height = "210px";
+              menuSection.style.height = "5.6rem"; // 210px
             });
           }
         });

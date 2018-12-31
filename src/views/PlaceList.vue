@@ -62,17 +62,11 @@
           _this.page = data.page;
           _this.limit = data.limit;
           _this.tableData = data.list;
-
-          /*_this.tableData = [
-            {
-              name: "场地名称1",
-              count: "123",
-              time: "2018-12-12 12:12:12",
-              placeId: '1'
-            }
-          ];*/
         }).catch(function (error) {
-
+          _this.$dialog.alert({
+            title: "提示",
+            message: "数据获取失败，请尝试重新进入"
+          });
         });
       },
       toDeviceList (target, rowData) {

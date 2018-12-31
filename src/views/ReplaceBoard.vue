@@ -85,7 +85,6 @@
       // 设备模糊查询
       fieldQueryOnline () {
         let _this = this;
-
         _this.$axios.post("/wx/queryOnlineDevice", _this.$qs.stringify({
           params: {
             deviceCode: _this.deviceCode,
@@ -99,16 +98,10 @@
           _this.fieldQueryData = data.list;
         }).catch(function () {
           // _this.$toast.fail("系统繁忙！");
-
-          let data = [];
-          for (var i = 0; i < 10; i++) {
-            data.push({
-              deviceId: i,
-              deviceSn: new Date().getTime()
-            });
-          }
-          _this.fieldQueryData = data;
-
+          _this.$dialog.alert({
+            title: "提示",
+            message: "数据获取失败，请尝试重新进入"
+          });
         });
       },
       // 设备模糊查询选择
@@ -144,7 +137,6 @@
           }
         }).catch(function () {
           _this.$toast.fail("系统繁忙！");
-
         });
       }
     },
