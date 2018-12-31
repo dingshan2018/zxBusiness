@@ -44,7 +44,7 @@
       // 设备列表
       getDeviceList (page, limit) {
         let _this = this;
-        _this.$axios.post("/settle/settlementParam/selecdevicelist", _this.$qs.stringify({
+        _this.$axios.post("/api/settle/settlementParam/selecdevicelist", _this.$qs.stringify({
           page: _this.page,
           limit: _this.limit,
           placeId: _this.$route.query.placeId

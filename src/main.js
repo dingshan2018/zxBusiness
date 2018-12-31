@@ -13,7 +13,6 @@ import {
   Field,
   CellGroup,
   Dialog,
-  Lazyload,
   Loading,
   Toast,
   Picker,
@@ -63,10 +62,6 @@ Vue.use(Row)
   .use(Field)
   .use(CellGroup)
   .use(Dialog)
-  .use(Lazyload, {
-    loading: "./img/icon__loading.svg",
-    lazyComponent: true
-  })
   .use(Loading)
   .use(Toast)
   .use(Picker)

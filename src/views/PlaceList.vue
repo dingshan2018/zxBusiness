@@ -49,7 +49,7 @@
       // 场所列表
       getPlaceList (page, limit) {
         let _this = this;
-        _this.$axios.post("/settle/settlementParam/selectzxplacelist", _this.$qs.stringify({
+        _this.$axios.post("/api/settle/settlementParam/selectzxplacelist", _this.$qs.stringify({
           page: _this.page,
           limit: _this.limit
         })).then(function (response) {

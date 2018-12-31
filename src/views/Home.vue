@@ -142,7 +142,7 @@
       // 出纸记录
       getOutPagerRecord (page, limit) {
         let _this = this;
-        _this.$axios.post("/settle/settlementParam/selectzxtissuerecordlist", _this.$qs.stringify({
+        _this.$axios.post("/api/settle/settlementParam/selectzxtissuerecordlist", _this.$qs.stringify({
           page: _this.page,
           limit: _this.limit
         })).then(function (response) {
@@ -155,7 +155,10 @@
           _this.tableData = data.list;
 
         }).catch(function (error) {
-
+          _this.$dialog.alert({
+            title: "系统发生错误",
+            message: "错误码：xcHomeSelectzxtissuerecordlistCatch"
+          });
         });
       },
       // 上一页

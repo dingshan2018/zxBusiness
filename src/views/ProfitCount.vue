@@ -51,7 +51,7 @@
       // 场所列表
       getProfitList (page, limit) {
         let _this = this;
-        _this.$axios.post("/settle/settlementParam/selecuserincomelist", _this.$qs.stringify({
+        _this.$axios.post("/api/settle/settlementParam/selecuserincomelist", _this.$qs.stringify({
           page: _this.page,
           limit: _this.limit
         })).then(function (response) {

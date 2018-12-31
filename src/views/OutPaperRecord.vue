@@ -99,7 +99,7 @@
       // 出纸记录排名
       getAdPlanClickRanking () {
         let _this = this;
-        _this.$axios.post("/settle/settlementParam/tissuerecordStatistics").then(function (response) {
+        _this.$axios.post("/api/settle/settlementParam/tissuerecordStatistics").then(function (response) {
           let data = response.data;
           if (!data) return;
 
@@ -115,7 +115,7 @@
       // 出纸列表
       getAdPlanList (page, limit) {
         let _this = this;
-        _this.$axios.post("/settle/settlementParam/selectzxtissuerecordlist", _this.$qs.stringify({
+        _this.$axios.post("/api/settle/settlementParam/selectzxtissuerecordlist", _this.$qs.stringify({
           page: _this.page,
           limit: _this.limit
         })).then(function (response) {

@@ -106,7 +106,7 @@
       fieldQueryOnline () {
         let _this = this;
 
-        _this.$axios.post("/settle/settlementParam/selectdeviceAll", _this.$qs.stringify({
+        _this.$axios.post("/api/settle/settlementParam/selectdeviceAll", _this.$qs.stringify({
           deviceSn: _this.device.deviceSn
         })).then(function (response) {
           let data = response.data;
@@ -127,7 +127,7 @@
       getPlaceList () {
         let _this = this;
 
-        _this.$axios.post("/settle/settlementParam/selectplaceAll").then(function (response) {
+        _this.$axios.post("/api/settle/settlementParam/selectplaceAll").then(function (response) {
           let data = response.data;
 
           _this.placePickerColumns = data.list;
@@ -148,7 +148,7 @@
           message: "加载中..."
         });
 
-        _this.$axios.post("/settle/settlementParam/deviceSave", _this.$qs.stringify({
+        _this.$axios.post("/api/settle/settlementParam/deviceSave", _this.$qs.stringify({
           deviceId: _this.device.deviceId,
           placeId: _this.place.placeId
         })).then(function (response) {

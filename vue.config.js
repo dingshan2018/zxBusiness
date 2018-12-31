@@ -10,10 +10,10 @@ module.exports = {
     port: 9090,
     // 跨域代理
     proxy: {
-      "/wx": {
-        target: "http://192.168.1.9:8086",
+      "^/api": {
+        // target: "http://192.168.1.9:8086",
         // target: "http://192.168.10.149:8086",
-        // target: 'http://mp.bp.zcloudtechs.cn',
+        target: 'http://mp.bp.zcloudtechs.cn',
         ws: true,
         changeOrigin: true
       },

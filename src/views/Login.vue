@@ -40,7 +40,7 @@
             encodeURIComponent(location.href) + "&response_type=code&scope=snsapi_userinfo&state=0#wechat_redirect";
         }
         else {
-          _this.$axios.get("/wx/userInfo", {
+          _this.$axios.get("/api/wx/userInfo", {
             params: {
               code : accessCode,
               state: 0
@@ -71,7 +71,7 @@
           message    : "登录中..."
         });
 
-        _this.$axios.post("/wxLogin", _this.$qs.stringify({
+        _this.$axios.post("/api/wxLogin", _this.$qs.stringify({
           // ohZpd0tPFpAeGZweVQEuinaa5H8M
           openId  : _this.userInfo.openId || 'ohZpd0tPFpAeGZweVQEuinaa5H8M'
         })).then(function (response) {

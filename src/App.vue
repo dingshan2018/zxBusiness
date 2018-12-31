@@ -40,7 +40,7 @@
             encodeURIComponent(location.href) + "&response_type=code&scope=snsapi_userinfo&state=0#wechat_redirect";
         }
         else {
-          _this.$axios.get("/wx/userInfo", {
+          _this.$axios.get("/api/wx/userInfo", {
             params: {
               code: accessCode,
               state: 0
@@ -52,14 +52,19 @@
             if (data && data.userInfo) {
               _this.setUserInfo(data.userInfo);
               _this.login();
-
             } else {
+              _this.$dialog.alert({
+                title: "系统发生错误",
+                message: "错误码：xcAppWxUserInfoDataUserInfo"
+              });
               _this.$router.push("/Error");
-
             }
           }).catch(function (error) {
+            _this.$dialog.alert({
+              title: "系统发生错误",
+              message: "错误码：xcAppWxUserInfoCatch"
+            });
             _this.$router.push("/Error");
-
           });
         }
       },
@@ -67,9 +72,9 @@
       login () {
         let _this = this;
 
-        _this.$axios.post("/wxLogin", _this.$qs.stringify({
+        _this.$axios.post("/api/wxLogin", _this.$qs.stringify({
           //  || "ohZpd0tPFpAeGZweVQEuinaa5H8M"
-          openId: _this.userInfo.openId || "ohZpd0tPFpAeGZweVQEuinaa5H8M"
+          openId: _this.userInfo.openId
         }))
           .then(function (response) {
             let data = response.data;
@@ -88,11 +93,18 @@
               _this.$router.push("/Home");
             }
             else {
+              _this.$dialog.alert({
+                title: "系统发生错误",
+                message: "错误码：xcAppLoginDataCode"
+              });
               _this.$router.push("/Error");
             }
 
           }).catch(function (error) {
-
+          _this.$dialog.alert({
+            title: "系统发生错误",
+            message: "错误码：xcAppLoginCatch"
+          });
         });
       }
     },
@@ -113,7 +125,7 @@
     }
   }
 
-  .block__model-title{
+  .block__model-title {
     padding: 0 10px;
     line-height: 30px;
     font-size: 12px;
@@ -151,7 +163,7 @@
     }
   }
 
-  .chart{
+  .chart {
     position: relative;
 
     .block__null {

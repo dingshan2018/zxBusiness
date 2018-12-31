@@ -105,7 +105,7 @@
       // 广告点击量排名
       getAdPlanClickRanking () {
         let _this = this;
-        _this.$axios.post("/settle/settlementParam/scheduleStatistics").then(function (response) {
+        _this.$axios.post("/api/settle/settlementParam/scheduleStatistics").then(function (response) {
           let data = response.data;
           if (!data) return;
 
@@ -121,7 +121,7 @@
       // 广告列表
       getAdPlanList (page, limit) {
         let _this = this;
-        _this.$axios.post("/settle/settlementParam/selecadschedulelist", _this.$qs.stringify({
+        _this.$axios.post("/api/settle/settlementParam/selecadschedulelist", _this.$qs.stringify({
           page: _this.page,
           limit: _this.limit
         })).then(function (response) {
