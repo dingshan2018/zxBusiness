@@ -138,8 +138,10 @@
           _this.placePickerColumns = data.list;
         }).cache(function (error) {
           _this.$dialog.alert({
-            title: "提示",
-            message: "数据获取失败，请尝试重新进入"
+            title: "系统繁忙",
+            message: "系统繁忙，请稍候再试"
+          }).then(function () {
+            WeixinJSBridge.call("closeWindow");
           });
         });
       },

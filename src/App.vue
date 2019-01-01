@@ -52,15 +52,19 @@
               _this.login();
             } else {
               _this.$dialog.alert({
-                title: "提示",
-                message: "用户信息获取错误，请确认是否已关注公众号，再重新进入"
+                title: "系统出错",
+                message: "系统正在维护，请稍候再试"
+              }).then(function () {
+                WeixinJSBridge.call("closeWindow");
               });
               _this.$router.push("/Error");
             }
           }).catch(function (error) {
             _this.$dialog.alert({
-              title: "提示",
-              message: "用户信息获取失败，请确认是否已关注公众号，再重新进入"
+              title: "系统出错",
+              message: "系统正在维护，请稍候再试"
+            }).then(function () {
+              WeixinJSBridge.call("closeWindow");
             });
             _this.$router.push("/Error");
           });
@@ -93,16 +97,20 @@
             }
             else {
               _this.$dialog.alert({
-                title: "提示",
-                message: "请确认是否已绑定微信号、手机号、QQ号。可在\"我->设置->隐私->添加我的方式\"中查看并打开。"
+                title: "系统",
+                message: "您的微信未绑定智媒纸巾管理员，请联系管理员注册加入鼎善智媒纸巾机项目"
+              }).then(function () {
+                WeixinJSBridge.call("closeWindow");
               });
               _this.$router.push("/Error");
             }
 
           }).catch(function (error) {
           _this.$dialog.alert({
-            title: "提示",
-            message: "登录失败，请退出再重新进入"
+            title: "系统出错",
+            message: "系统正在维护，请稍候再试"
+          }).then(function () {
+            WeixinJSBridge.call("closeWindow");
           });
         });
       }

@@ -130,18 +130,18 @@
       menuHeight () {
         let menuSection = this.$refs.menuSection;
         this.$nextTick(function () {
-          if (menuSection.scrollHeight > 0 && menuSection.scrollHeight < 4) {
+          let mentItem = document.querySelectorAll(".menu-item");
+          if (mentItem.length > 0 && mentItem.length < 4) {
             this.isMenu = true;
             // 等DOM 更新循环结束再设置height
             this.$nextTick(function () {
               // menuSection.style.height = menuSection.scrollHeight + "px";
               menuSection.style.height = "3.2rem"; // 120px
             });
-          }else if (menuSection.scrollHeight >= 4) {
+          }else if (mentItem.length >= 4) {
             this.isMenu = true;
             // 等DOM 更新循环结束再设置height
             this.$nextTick(function () {
-              // menuSection.style.height = menuSection.scrollHeight + "px";
               menuSection.style.height = "5.6rem"; // 210px
             });
           }
@@ -166,8 +166,10 @@
 
         }).catch(function (error) {
           _this.$dialog.alert({
-            title: "提示",
-            message: "最近出纸记录获取失败，请重新进入"
+            title: "系统繁忙",
+            message: "系统繁忙，请稍候再试"
+          }).then(function () {
+            WeixinJSBridge.call("closeWindow");
           });
         });
       },
