@@ -79,7 +79,7 @@
 
   .table-list {
     position: relative;
-    min-height: 400px;
+    /*min-height: 400px;*/
 
     table {
       width: 100%;

@@ -32,7 +32,8 @@ import "../public/base.css";
 process.env.NODE_ENV === "development" ? new VConsole() : false;*/
 
 Vue.config.productionTip = false;
-
+//跨域请求，允许保存cookie
+axios.defaults.withCredentials = true;
 Vue.prototype.$axios = axios;
 
 Vue.prototype.$qs = qs;

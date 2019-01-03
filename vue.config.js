@@ -11,9 +11,7 @@ module.exports = {
     // 跨域代理
     proxy: {
       "^/api": {
-        // target: "http://192.168.1.9:8086",
-        // target: "http://192.168.10.149:8086",
-        target: 'http://mp.bp.zcloudtechs.cn',
+        target: "http://mp.bp.zcloudtechs.cn",
         ws: true,
         changeOrigin: true
       },

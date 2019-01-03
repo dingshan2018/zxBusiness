@@ -118,6 +118,7 @@
     created () {
       this.getWxUserInfo();
       // this.login();
+      // this.$router.push("/Error");
     }
   };
 </script>
