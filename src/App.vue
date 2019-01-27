@@ -49,7 +49,9 @@
             // 用户信息
             if (data && data.userInfo) {
               _this.setUserInfo(data.userInfo);
-              _this.login();
+              _this.$nextTick(function () {
+                _this.login();
+              });
             } else {
               _this.$dialog.alert({
                 title: "系统出错",
@@ -112,10 +114,10 @@
           .then(function (response) {
             let data = response.data;
             if (data && data.code === 0) {
-              // 菜单权限
-              _this.setMenuLimit(data.msg ? data.msg.toString() : "");
               // _this.setMenuLimit(
               //   "settle:userIncome:view,business:place:view,business:device:view,advertise:adSchedule:view,business:tissueRecord:view,business:device:view");
+              // 菜单权限
+              _this.setMenuLimit(data.msg ? data.msg.toString() : "");
               // 用户头像、名字
               _this.setWxUserBaseInfo({
                 name: data.name,
@@ -136,17 +138,17 @@
               _this.$router.push("/Error");
             }
           }).catch(function (error) {
-          _this.$dialog.alert({
-            title: "系统出错",
-            message: "系统正在维护，请稍候再试"
-          }).then(function () {
-            WeixinJSBridge.call("closeWindow");
-          });
+            _this.$dialog.alert({
+              title: "系统出错",
+              message: "系统正在维护，请稍候再试"
+            }).then(function () {
+              WeixinJSBridge.call("closeWindow");
+            });
         });
       }
     },
     created () {
-      this.getWxUserInfoNew();
+      this.getWxUserInfo();
       // this.login();
       // this.$router.push("/Error");
     }
