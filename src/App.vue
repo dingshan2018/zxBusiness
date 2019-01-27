@@ -70,6 +70,36 @@
           });
         }
       },
+      // 微信用户信息 新的接口
+      getWxUserInfoNew () {
+        let _this = this;
+        _this.$axios.get("/wx/wxUserInfo").then(function (response) {
+          let data = response.data;
+          // 用户信息
+          if (data && data.userInfo) {
+            _this.setUserInfo(data.userInfo);
+            _this.$nextTick(function () {
+              _this.login();
+            });
+          } else {
+            _this.$dialog.alert({
+              title: "系统出错",
+              message: "系统正在维护，请稍候再试"
+            }).then(function () {
+              WeixinJSBridge.call("closeWindow");
+            });
+            _this.$router.push("/Error");
+          }
+        }).catch(function (error) {
+          _this.$dialog.alert({
+            title: "系统出错",
+            message: "系统正在维护，请稍候再试"
+          }).then(function () {
+            WeixinJSBridge.call("closeWindow");
+          });
+          _this.$router.push("/Error");
+        });
+      },
       // 登录
       login () {
         let _this = this;
@@ -81,7 +111,6 @@
         })
           .then(function (response) {
             let data = response.data;
-
             if (data && data.code === 0) {
               // 菜单权限
               _this.setMenuLimit(data.msg ? data.msg.toString() : "");
@@ -93,7 +122,9 @@
                 headImg: data.headImg
               });
               // 路由跳转
-              _this.$router.push("/Home");
+              _this.$nextTick(function () {
+                _this.$router.push("/Home");
+              });
             }
             else {
               _this.$dialog.alert({
@@ -104,7 +135,6 @@
               });
               _this.$router.push("/Error");
             }
-
           }).catch(function (error) {
           _this.$dialog.alert({
             title: "系统出错",
@@ -116,7 +146,7 @@
       }
     },
     created () {
-      this.getWxUserInfo();
+      this.getWxUserInfoNew();
       // this.login();
       // this.$router.push("/Error");
     }

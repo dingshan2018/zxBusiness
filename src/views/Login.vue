@@ -78,7 +78,7 @@
           withCredentials: true
         }).then(function (response) {
           let data = response.data;
-          console.log(data);
+          // console.log(data);
           if (data.code === 0) {
             _this.$toast.clear();
             _this.$router.replace("/Home");

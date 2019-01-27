@@ -33,7 +33,7 @@
           v-model="place.name"
           label="投放场所"
           placeholder="选择投放场所"
-          @click.native="placePopup = true"/>
+          @click.native.prevent="placePopup = true"/>
       </van-cell-group>
 
       <van-button type="default"
