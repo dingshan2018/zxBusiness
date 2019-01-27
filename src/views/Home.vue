@@ -9,7 +9,6 @@
       </div>
       <div class="block__loading" v-if="!wxUserBaseInfo.headImg"></div>
     </section>
-
     <!-- 菜单 -->
     <section class="menu-section" :class="isMenu ? 'menu-section--show' : false" ref="menuSection">
       <div class="menu-item van-col--8" v-if="menuLimitHas('settle:userIncome:view')">
@@ -52,7 +51,6 @@
       </div>-->
       <div class="block__loading" v-if="!menuLimit.length"></div>
     </section>
-
     <!-- 最近出纸记录 -->
     <div class="block__model-title van-hairline--top van-hairline--bottom van-ellipsis">最近出纸记录：</div>
     <table-list :columns="tableColumns" :data="tableData"></table-list>
@@ -158,12 +156,10 @@
         }).then(function (response) {
           let data = response.data;
           if (!data) return;
-
           _this.totalCount = data.totalCount;
           _this.page = data.page;
           _this.limit = data.limit;
           _this.tableData = data.list;
-
         }).catch(function (error) {
           _this.$dialog.alert({
             title: "系统繁忙",

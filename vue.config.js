@@ -11,16 +11,11 @@ module.exports = {
     // 跨域代理
     proxy: {
       "^/api": {
-        target: "http://mp.bp.zcloudtechs.cn",
+        // target: "http://mp.bp.zcloudtechs.cn",
+        target: "http://mp.dingscm.com",
         ws: true,
         changeOrigin: true
       },
-      "/settle": {
-        target: "http://192.168.1.9:8086",
-        // target: "http://192.168.10.149:8086",
-        ws: true,
-        changeOrigin: true
-      }
     }
   },
   // webpack配置

@@ -1,5 +1,5 @@
 module.exports = {
-  root: true,
+/*  root: true,
   env: {
     node: true,
     browser: true,
@@ -39,5 +39,5 @@ module.exports = {
   ],
   parserOptions: {
     parser: "babel-eslint"
-  }
+  }*/
 };

@@ -111,15 +111,12 @@
         }).then(function (response) {
           let data = response.data;
           if (!data) return;
-
           _this.outPaperRecordRanking = data.list;
           _this.initAdChart();
         }).catch(function (error) {
           _this.$dialog.alert({
             title: "系统繁忙",
             message: "系统繁忙，请稍候再试"
-          }).then(function () {
-            WeixinJSBridge.call("closeWindow");
           });
         });
       },
@@ -127,7 +124,6 @@
       getAdPlanList () {
         let _this = this;
         _this.pullUpLoad = true;
-
         _this.$axios.post("/api/settle/settlementParam/selectzxtissuerecordlist", _this.$qs.stringify({
           page: _this.page,
           limit: _this.limit
@@ -136,7 +132,6 @@
         }).then(function (response) {
           let data = response.data;
           if (!data) return;
-
           _this.totalCount = data.totalCount;
           _this.page = data.page;
           _this.limit = data.limit;
@@ -151,8 +146,6 @@
           _this.$dialog.alert({
             title: "系统繁忙",
             message: "系统繁忙，请稍候再试"
-          }).then(function () {
-            WeixinJSBridge.call("closeWindow");
           });
         });
       },

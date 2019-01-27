@@ -6,10 +6,8 @@
       left-text="返回"
       left-arrow
       @click-left="$router.back()"/>
-
     <scroll-view>
       <van-cell-group class="input-group ">
-
         <div class="field-query ">
           <van-field
             v-model="device.deviceSn"
@@ -28,23 +26,19 @@
             </div>
           </scroll-view>
         </div>
-
         <van-field
           v-model="place.name"
           label="投放场所"
           placeholder="选择投放场所"
-          @click.native.prevent="placePopup = true"/>
+          @touchstart.native="onPlaceTouchStart"/>
       </van-cell-group>
-
       <van-button type="default"
                   class="submit-btn"
                   block
                   :disabled="!(!!device.deviceSn && !!place.name)"
                   @click="submitClick">确认
       </van-button>
-
     </scroll-view>
-
     <!-- 设备列表 -->
     <van-popup v-model="placePopup" position="bottom">
       <van-picker :columns="placePickerColumns"
@@ -102,6 +96,11 @@
       }
     },
     methods: {
+      // 选择投放场所
+      onPlaceTouchStart (event) {
+        event.preventDefault();
+        this.placePopup = true;
+      },
       // 设备模糊查询
       fieldQueryOnline () {
         let _this = this;

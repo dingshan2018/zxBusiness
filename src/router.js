@@ -1,6 +1,5 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Login from "./views/Login.vue";
 import Home from "./views/Home.vue";
 import ProfitCount from "./views/ProfitCount.vue";
 import ReplaceBoard from "./views/ReplaceBoard.vue";
@@ -15,13 +14,6 @@ Vue.use(Router);
 
 export default new Router({
   routes: [
-    {
-      path: "/Login",
-      name: "Login",
-      components: {
-        mainKeep: Login
-      }
-    },
     {
       path: "/Home",
       name: "Home",
