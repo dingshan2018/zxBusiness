@@ -47,10 +47,10 @@ body {
   /*padding: constant(safe-area-inset-top) constant(safe-area-inset-right) constant(safe-area-inset-bottom) constant(safe-area-inset-left);*/
   /*padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);*/
   line-height: 1;
-  font-family: -apple-system, 'PingFang SC Medium', 'Helvetica Neue', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  font-family: 'PingFang SC', 'Helvetica Neue', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
   font-size: 14px;
-  font-weight: 500;
-  color: #333;
+  font-weight: 400;
+  color: #222938;
   background-color: #fff;
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
@@ -76,6 +76,28 @@ body {
   clear: both;
 }
 
+.block__confirm-btn{
+  display: block;
+  width: 311px;
+  height: 49px;
+  margin: 51px auto;
+  border: none;
+  border-radius: 4px;
+  font-size: 18px;
+  color: #fff;
+  background: linear-gradient(left, #ffd74b 0%, #ffb93f 100%);
+  box-shadow: 0 5px 11px 0 rgba(255, 186, 63, .34);
+}
+
+.block__confirm-btn--absolute {
+  z-index: 1;
+  position: absolute;
+  right: 0;
+  bottom: 51px;
+  left: 0;
+  margin: 0 auto;
+}
+
 /* app内容
   ********************/
 [v-cloak] {
@@ -93,50 +115,29 @@ body {
   user-select: none;
 }
 
-#iosStatusBar {
-  z-index: 1000;
-  position: relative;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 0;
-  background: #fff;
-  overflow: hidden;
-}
-
-.page-view {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: calc(100% - 50px);
-  background: #fff;
-  overflow: hidden;
-}
-
-.page-view[full]{
-  height: 100%;
-}
-
-.page-content {
-  position: relative;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: calc(100% - 46px);
-  overflow: hidden;
-}
-
-.page-content[full]{
-  height: 100%;
+.page-padding {
+  padding: 0 15px;
 }
 
 .nav-bar {
-  height: 46px;
+  height: 44px;
+  line-height: 44px;
 }
 
 .menu-tab {
   height: 50px;
+}
+
+.nav-bar .nav-bar__icon-left {
+  vertical-align: middle;
+  width: 9px;
+  height: 17px;
+}
+
+.nav-bar .nav-bar__icon-right {
+  vertical-align: middle;
+  width: 19px;
+  height: 20px;
 }
 
 /* 重写组件样式
@@ -148,13 +149,41 @@ body {
   z-index: 100;
 }
 
-.van-modal {
-  z-index: 2000 !important;
+.nav-bar .van-nav-bar__left,
+.nav-bar .van-nav-bar__right {
+  top: 0;
+}
+
+.nav-bar .van-nav-bar__title {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.nav-bar .van-icon-arrow-left {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.nav-bar .van-icon-search {
+  font-size: 20px;
+  font-weight: 500;
 }
 
 .van-nav-bar .van-icon,
 .van-nav-bar__text {
-  color: #333;
+  color: inherit;
+}
+
+.menu-tab .van-tabbar-item {
+  color: #bbb;
+}
+
+.menu-tab .van-tabbar-item--active {
+  color: #000;
+}
+
+.van-modal {
+  z-index: 2000 !important;
 }
 
 .van-dialog {
@@ -178,11 +207,17 @@ body {
 
 .van-dialog .van-dialog__confirm,
 .van-dialog .van-dialog__confirm:active {
-  color: #00c292;
+  color: #8190fe;
 }
 
 .van-pull-refresh,
 .van-pull-refresh__track {
   height: 100%;
   overflow: auto;
+}
+
+.no-data-text {
+  font-size: 0.37333rem;
+  height: 1rem;
+  line-height: 1rem;
 }

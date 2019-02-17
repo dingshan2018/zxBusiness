@@ -1,89 +1,89 @@
 <template>
-  <scroll-view full>
-    <!-- 用户信息 -->
-    <section class="user-info van-hairline--bottom">
-      <img class="user-info__bg--blur" :src="wxUserBaseInfo.headImg"/>
-      <div class="user-info__content block__clear-both">
-        <img class="user-info__avatar" :src="wxUserBaseInfo.headImg"/>
-        <p class="user-info__name van-ellipsis animated">{{wxUserBaseInfo.name}}</p>
+  <page-view :iphone-bar="false">
+    <page-scroll full>
+      <!-- 用户信息 -->
+      <section class="user-info van-hairline--bottom">
+        <!--<img class="user-info__bg&#45;&#45;blur" :src="wxUserBaseInfo.headImg"/>-->
+        <div class="user-info__content block__clear-both">
+          <img class="user-info__avatar" :src="wxUserBaseInfo.headImg"/>
+          <p class="user-info__name van-ellipsis animated">{{wxUserBaseInfo.name}}</p>
+        </div>
+      </section>
+      <!-- 菜单 -->
+      <section class="menu-section" v-if="menuLimit.length">
+        <div class="menu-item van-col--6" v-if="menuLimitHas('settle:userIncome:view')">
+          <router-link to="/ProfitCount">
+            <img class="menu-item__icon" src="../assets/img/icon__ProfitCount.png"/>
+            <span class="menu-item__name van-ellipsis">收益统计</span>
+          </router-link>
+        </div>
+        <div class="menu-item van-col--6" v-if="menuLimitHas('business:place:view')">
+          <router-link to="/PlaceList">
+            <img class="menu-item__icon" src="../assets/img/icon__PlaceList.png"/>
+            <span class="menu-item__name van-ellipsis">场所列表</span>
+          </router-link>
+        </div>
+        <div class="menu-item van-col--6" v-if="menuLimitHas('business:device:view')">
+          <router-link to="/DeviceRelease">
+            <img class="menu-item__icon" src="../assets/img/icon__DeviceRelease.png"/>
+            <span class="menu-item__name van-ellipsis">设备投放</span>
+          </router-link>
+        </div>
+        <div class="menu-item van-col--6" v-if="menuLimitHas('advertise:adSchedule:view')">
+          <router-link to="/AdPlan">
+            <img class="menu-item__icon" src="../assets/img/icon__AdPlan.png">
+            <span class="menu-item__name van-ellipsis">广告计划</span>
+          </router-link>
+        </div>
+        <div class="menu-item van-col--6" v-if="menuLimitHas('business:tissueRecord:view')">
+          <router-link to="/OutPaperRecord">
+            <img class="menu-item__icon" src="../assets/img/icon__OutPaperRecord.png"/>
+            <span class="menu-item__name van-ellipsis">出纸记录</span>
+          </router-link>
+        </div>
+      </section>
+      <!-- 最近出纸记录 -->
+      <div class="block__table-record">
+        <div class="block__loading" v-if="tableLoading">
+          <span class="block__loading-icon"></span>
+          <span class="block__loading-text">加载中...</span>
+        </div>
+        <div class="block__null" v-if="!tableLoading && !tableData.length">
+          <span class="block__null-text">暂无数据</span>
+        </div>
+        <div class="block__model-title van-hairline--top van-hairline--bottom van-ellipsis">最近出纸记录：</div>
+        <table-list :columns="tableColumns" :data="tableData"></table-list>
+        <van-row class="pagination" tag="ul" v-if="tableData.length">
+          <van-col span="12"
+                   tag="li"
+                   class="pagination__prev pagination__like van-ellipsis"
+                   @click.native="paginationPrev">
+            <van-icon name="arrow-left"/>
+            上一页
+          </van-col>
+          <van-col span="12"
+                   tag="li"
+                   class="pagination__next pagination__like van-ellipsis"
+                   @click.native="paginationNext">
+            下一页
+            <van-icon name="arrow"/>
+          </van-col>
+        </van-row>
       </div>
-      <div class="block__loading" v-if="!wxUserBaseInfo.headImg"></div>
-    </section>
-
-    <!-- 菜单 -->
-    <section class="menu-section" :class="isMenu ? 'menu-section--show' : false" ref="menuSection">
-      <div class="menu-item van-col--8" v-if="menuLimitHas('settle:userIncome:view')">
-        <router-link to="/ProfitCount">
-          <img class="menu-item__icon" src="../assets/img/icon__ProfitCount.png"/>
-          <span class="menu-item__name van-ellipsis">收益统计</span>
-        </router-link>
-      </div>
-      <div class="menu-item van-col--8" v-if="menuLimitHas('business:place:view')">
-        <router-link to="/PlaceList">
-          <img class="menu-item__icon" src="../assets/img/icon__PlaceList.png"/>
-          <span class="menu-item__name van-ellipsis">场所列表</span>
-        </router-link>
-      </div>
-      <div class="menu-item van-col--8" v-if="menuLimitHas('business:device:view')">
-        <router-link to="/DeviceRelease">
-          <img class="menu-item__icon" src="../assets/img/icon__DeviceRelease.png"/>
-          <span class="menu-item__name van-ellipsis">设备投放</span>
-        </router-link>
-      </div>
-      <div class="menu-item van-col--8" v-if="menuLimitHas('advertise:adSchedule:view')">
-        <router-link to="/AdPlan">
-          <img class="menu-item__icon" src="../assets/img/icon__AdPlan.png">
-          <span class="menu-item__name van-ellipsis">广告计划</span>
-        </router-link>
-      </div>
-      <div class="menu-item van-col--8" v-if="menuLimitHas('business:tissueRecord:view')">
-        <router-link to="/OutPaperRecord">
-          <img class="menu-item__icon" src="../assets/img/icon__OutPaperRecord.png"/>
-          <span class="menu-item__name van-ellipsis">出纸记录</span>
-        </router-link>
-      </div>
-      <!--<div class="menu-item" v-if="menuLimitHas('business:device:view') || menuLimitHas('client:repair:view')">
-        <router-link to="/ReplaceBoard">
-          <span class="menu-item__icon">
-            <van-icon name="setting"/>
-          </span>
-          <span class="menu-item__name van-ellipsis">设备换板</span>
-        </router-link>
-      </div>-->
-      <div class="block__loading" v-if="!menuLimit.length"></div>
-    </section>
-
-    <!-- 最近出纸记录 -->
-    <div class="block__model-title van-hairline--top van-hairline--bottom van-ellipsis">最近出纸记录：</div>
-    <table-list :columns="tableColumns" :data="tableData"></table-list>
-    <van-row class="pagination" tag="ul" v-if="tableData.length">
-      <van-col span="12"
-               tag="li"
-               class="pagination__prev pagination__like van-ellipsis"
-               @click.native="paginationPrev">
-        <van-icon name="arrow-left"/>
-        上一页
-      </van-col>
-      <van-col span="12"
-               tag="li"
-               class="pagination__next pagination__like van-ellipsis"
-               @click.native="paginationNext">
-        下一页
-        <van-icon name="arrow"/>
-      </van-col>
-    </van-row>
-  </scroll-view>
+    </page-scroll>
+  </page-view>
 </template>
 
 <script>
-  import { mapGetters } from "vuex";
-
   export default {
-    name: "Home",
     data () {
       return {
-        // 用户是否有菜单
-        isMenu: false,
+        // 首页用户基本信息
+        wxUserBaseInfo: {},
+        // 首页菜单权限
+        menuLimit: [],
+        // 加载
+        tableLoading: true,
         // 表格列
         tableColumns: [
           {
@@ -110,61 +110,36 @@
         limit: 5
       };
     },
-    computed: {
-      ...mapGetters(["userInfo", "wxUserBaseInfo", "menuLimit"])
-    },
-    watch: {
-      "menuLimit": function (newV, oldV) {
-        // 初始就进入
-        if (newV.length) {
-          this.menuHeight();
-        }
-      }
-    },
     methods: {
-      // 菜单权限判断
+      // 判断是否有该菜单权限
       menuLimitHas (value) {
-        return this.menuLimit.indexOf(value) > -1;
+        return this.menuLimit.includes(value);
       },
-      // 动态计算菜单的高度
-      menuHeight () {
-        let menuSection = this.$refs.menuSection;
-        this.$nextTick(function () {
-          let mentItem = document.querySelectorAll(".menu-item");
-          if (mentItem.length > 0 && mentItem.length < 4) {
-            this.isMenu = true;
-            // 等DOM 更新循环结束再设置height
-            this.$nextTick(function () {
-              // menuSection.style.height = menuSection.scrollHeight + "px";
-              menuSection.style.height = "3.2rem"; // 120px
-            });
-          }else if (mentItem.length >= 4) {
-            this.isMenu = true;
-            // 等DOM 更新循环结束再设置height
-            this.$nextTick(function () {
-              menuSection.style.height = "5.6rem"; // 210px
-            });
-          }
-        });
-      },
-      // 出纸记录
+      // 出纸记录 /api
       getOutPagerRecord (page, limit) {
         let _this = this;
-        _this.$axios.post("/api/settle/settlementParam/selectzxtissuerecordlist", _this.$qs.stringify({
+        _this.$axios.post("/settle/settlementParam/selectzxtissuerecordlist", _this.$qs.stringify({
           page: _this.page,
           limit: _this.limit
-        }), {
-          withCredentials: true
-        }).then(function (response) {
+        })).then(function (response) {
+          _this.tableLoading = false;
           let data = response.data;
-          if (!data) return;
-
           _this.totalCount = data.totalCount;
           _this.page = data.page;
           _this.limit = data.limit;
           _this.tableData = data.list;
-
         }).catch(function (error) {
+          // _this.tableLoading = false;
+          let response = {};
+          response.data = {
+            "limit": "5", "page": "1", "totalCount": 0, "list": []
+          };
+          let data = response.data;
+          _this.totalCount = data.totalCount;
+          _this.page = data.page;
+          _this.limit = data.limit;
+          _this.tableData = data.list;
+          return;
           _this.$dialog.alert({
             title: "系统繁忙",
             message: "系统繁忙，请稍候再试"
@@ -188,15 +163,13 @@
         this.getOutPagerRecord(this.page++, this.limit);
       }
     },
-    created () {
+    mounted () {
+      // 首页用户基本信息
+      this.wxUserBaseInfo = JSON.parse(localStorage.wxUserBaseInfo);
+      // 首页菜单权限
+      this.menuLimit = localStorage.menuLimit.split(",");
       // 获取最近出纸记录
       this.getOutPagerRecord();
-    },
-    mounted () {
-      // 从别的页面刷新进入
-      if (!this.isMenu && this.menuLimit) {
-        this.menuHeight();
-      }
     }
   };
 </script>
@@ -208,40 +181,40 @@
     position: relative;
     height: 140px;
     overflow: hidden;
-  }
+    background: url("../assets/img/home-header.png") no-repeat -25px bottom/400px #0ba84c;
+    .user-info__bg--blur {
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 300%;
+      height: 300%;
+      filter: blur(15Px);
+    }
 
-  .user-info__bg--blur {
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 300%;
-    height: 300%;
-    filter: blur(15Px);
-  }
+    .user-info__content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
 
-  .user-info__content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
+    .user-info__avatar {
+      display: block;
+      width: 66px;
+      height: 66px;
+      margin: 10px auto 0;
+      padding: 2px;
+      border-radius: 50%;
+      background-color: #fff;
+      overflow: hidden;
+    }
 
-  .user-info__avatar {
-    display: block;
-    width: 66px;
-    height: 66px;
-    margin: 10px auto 0;
-    padding: 2px;
-    border-radius: 50%;
-    background-color: #fff;
-    overflow: hidden;
-  }
-
-  .user-info__name {
-    text-align: center;
-    font-size: 15px;
-    font-weight: 600;
-    color: #fff;
+    .user-info__name {
+      text-align: center;
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+    }
   }
 
   .menu-section {
@@ -250,20 +223,15 @@
     justify-content: flex-start;
     align-items: center;
     position: relative;
-    height: 0;
-    padding: 0;
+    padding: 15px 0;
     overflow: hidden;
     transition: height .3s ease-in;
-    &.menu-section--show {
-      height: auto;
-      padding: 15px 0;
-    }
 
     .menu-item {
       display: flex;
       justify-content: center;
       align-items: center;
-      margin: 15px 0;
+      margin: 10px 0;
       text-align: center;
       overflow: hidden;
     }
@@ -275,7 +243,6 @@
       margin: 0 auto;
       padding: 2px;
       border-radius: 4px;
-      /*background: radial-gradient(50% 50%, circle cover, #f1f1f1 0, #f9f9f9 100%);*/
     }
 
     .menu-item__name {
@@ -284,7 +251,6 @@
       line-height: 20px;
       margin-top: 8px;
       padding: 0 4px;
-      font-weight: 600;
       font-size: 14px;
       color: #333;
     }
@@ -299,16 +265,23 @@
     }
   }
 
-  .pagination {
-    position: relative;
-    width: 100%;
-    padding: 0 10px;
+  .block__table-record {
+    .pagination {
+      position: relative;
+      width: 100%;
+      margin-top: 15px;
+      padding: 0 10px;
+      .pagination__like {
+        padding: 0 5px;
+        line-height: 40px;
+        text-align: center;
+        font-size: 12px;
+      }
 
-    .pagination__like {
-      padding: 0 5px;
-      line-height: 40px;
-      text-align: center;
-      font-size: 12px;
+      .van-icon {
+        vertical-align: middle;
+      }
     }
   }
+
 </style>

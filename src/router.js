@@ -3,13 +3,11 @@ import Router from "vue-router";
 import Login from "./views/Login.vue";
 import Home from "./views/Home.vue";
 import ProfitCount from "./views/ProfitCount.vue";
-import ReplaceBoard from "./views/ReplaceBoard.vue";
 import DeviceList from "./views/DeviceList.vue";
 import DeviceRelease from "./views/DeviceRelease.vue";
 import PlaceList from "./views/PlaceList.vue";
 import OutPaperRecord from "./views/OutPaperRecord.vue";
 import AdPlan from "./views/AdPlan.vue";
-import Error from "./views/Error.vue";
 
 Vue.use(Router);
 
@@ -17,74 +15,35 @@ export default new Router({
   routes: [
     {
       path: "/Login",
-      name: "Login",
-      components: {
-        mainKeep: Login
-      }
+      component: Login
     },
     {
       path: "/Home",
-      name: "Home",
-      components: {
-        mainKeep: Home
-      }
+      component: Home
     },
     {
       path: "/ProfitCount",
-      name: "ProfitCount",
-      components: {
-        sub: ProfitCount
-      }
-    },
-    {
-      path: "/ReplaceBoard",
-      name: "ReplaceBoard",
-      components: {
-        sub: ReplaceBoard
-      }
+      component: ProfitCount
     },
     {
       path: "/DeviceList",
-      name: "DeviceList",
-      components: {
-        sub: DeviceList
-      }
+      component: DeviceList
     },
     {
       path: "/DeviceRelease",
-      name: "DeviceRelease",
-      components: {
-        sub: DeviceRelease
-      }
+      component: DeviceRelease
     },
     {
       path: "/PlaceList",
-      name: "PlaceList",
-      components: {
-        sub: PlaceList
-      }
+      component: PlaceList
     },
     {
       path: "/AdPlan",
-      name: "AdPlan",
-      components: {
-        sub: AdPlan
-      }
+      component: AdPlan
     },
     {
       path: "/OutPaperRecord",
-      name: "OutPaperRecord",
-      components: {
-        sub: OutPaperRecord
-      }
-    },
-    {
-      path: "/Error",
-      name: "Error",
-      // redirect: '/Login'
-      components: {
-        sub: Error
-      }
+      component: OutPaperRecord
     }
   ]
 });

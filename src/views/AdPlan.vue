@@ -1,43 +1,53 @@
 <template>
-  <div class="page-view" full>
+  <page-view :iphone-bar="false">
     <van-nav-bar
       class="nav-bar"
       title="广告计划"
       left-text="返回"
       left-arrow
       @click-left="$router.back()"/>
-
-    <scroll-view
-      :pull-up-offset="pullUpOffset"
-      :pull-up-load="pullUpLoad"
-      :pull-up-finished="pullUpFinished"
-      @pull-up-finish="pullUpFinish">
+    <page-scroll height="calc(100vh - 1.17333rem)"
+                 :iphone-bar="false"
+                 :pull-up-offset="pullUpOffset"
+                 :pull-up-load="pullUpLoad"
+                 :pull-up-finished="pullUpFinished"
+                 @pull-up-finish="pullUpFinish">
       <div class="chart">
         <div class="block__model-title van-hairline--top van-hairline--bottom van-ellipsis">广告点击量排名</div>
         <canvas id="chartCanvas" v-if="adPlanClickRanking"></canvas>
-        <div class="block__loading" v-if="!adPlanClickRanking.length && !chartDataEmpty"></div>
-        <div class="block__null" v-if="!adPlanClickRanking.length && chartDataEmpty">
+        <div class="block__loading" v-if="chartLoading">
+          <span class="block__loading-icon"></span>
+          <span class="block__loading-text">加载中...</span>
+        </div>
+        <div class="block__null" v-if="!chartLoading && !adPlanClickRanking.length">
           <span class="block__null-text">暂无数据</span>
         </div>
       </div>
-
-      <div class="block__model-title van-hairline--top van-hairline--bottom van-ellipsis">广告点击量</div>
-      <table-list :columns="tableColumns" :data="tableData"></table-list>
-
-    </scroll-view>
-  </div>
-
+      <div class="block__table-record">
+        <div class="block__loading" v-if="tableLoading">
+          <span class="block__loading-icon"></span>
+          <span class="block__loading-text">加载中...</span>
+        </div>
+        <div class="block__null" v-if="!tableLoading && !tableData.length">
+          <span class="block__null-text">暂无数据</span>
+        </div>
+        <div class="block__model-title van-hairline--top van-hairline--bottom van-ellipsis">广告点击量</div>
+        <table-list :columns="tableColumns" :data="tableData"></table-list>
+      </div>
+    </page-scroll>
+  </page-view>
 </template>
 
 <script>
   export default {
-    name: "AdPlan",
     data () {
       return {
         // 广告点击量排名
         adPlanClickRanking: [],
-        // 图表空数据
-        chartDataEmpty: false,
+        // 图表加载
+        chartLoading: true,
+        // 加载
+        tableLoading: true,
         // 表格列
         tableColumns: [
           {
@@ -77,15 +87,6 @@
         pullUpFinished: false
       };
     },
-    watch: {
-      adPlanClickRanking: function (newV, oldV) {
-        if (!newV.length && !this.chartDataEmpty) {
-          this.chartDataEmpty = true;
-        } else {
-          this.chartDataEmpty = false;
-        }
-      }
-    },
     methods: {
       // 图表
       initAdChart () {
@@ -112,20 +113,15 @@
       // 广告点击量排名
       getAdPlanClickRanking () {
         let _this = this;
-        _this.$axios.post("/api/settle/settlementParam/scheduleStatistics", {}, {
-          withCredentials: true
-        }).then(function (response) {
+        _this.$axios.post("/api/settle/settlementParam/scheduleStatistics").then(function (response) {
+          _this.chartLoading = false;
           let data = response.data;
-          if (!data) return;
-
           _this.adPlanClickRanking = data.list;
           _this.initAdChart();
         }).catch(function (error) {
           _this.$dialog.alert({
             title: "系统繁忙",
             message: "系统繁忙，请稍候再试"
-          }).then(function () {
-            WeixinJSBridge.call("closeWindow");
           });
         });
       },
@@ -133,16 +129,12 @@
       getAdPlanList () {
         let _this = this;
         _this.pullUpLoad = true;
-
         _this.$axios.post("/api/settle/settlementParam/selecadschedulelist", _this.$qs.stringify({
           page: _this.page,
           limit: _this.limit
-        }), {
-          withCredentials: true
-        }).then(function (response) {
+        })).then(function (response) {
+          _this.tableLoading = false;
           let data = response.data;
-          if (!data) return;
-
           _this.totalCount = data.totalCount;
           _this.page = data.page;
           _this.limit = data.limit;
@@ -157,8 +149,6 @@
           _this.$dialog.alert({
             title: "系统繁忙",
             message: "系统繁忙，请稍候再试"
-          }).then(function () {
-            WeixinJSBridge.call("closeWindow");
           });
         });
       },

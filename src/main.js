@@ -1,45 +1,23 @@
 import Vue from "vue";
 import router from "./router";
-import store from "./store";
 import App from "./App.vue";
-import ScrollView from "./components/ScrollView";
 import TableList from "./components/TableList";
-import {
-  Row,
-  Col,
-  NavBar,
-  Button,
-  List,
-  Field,
-  CellGroup,
-  Dialog,
-  Loading,
-  Toast,
-  Picker,
-  Popup,
-  Actionsheet,
-  Icon
-} from "vant";
+import PageView from "./components/PageView";
+import PageScroll from "./components/PageScroll";
+import Vant from "vant";
+import "vant/lib/index.css";
 import axios from "axios";
 import qs from "qs";
 import f2 from "@antv/f2";
 import "lib-flexible";
-
-import "../public/base.css";
-
-/*import VConsole from "vconsole";
-
-process.env.NODE_ENV === "development" ? new VConsole() : false;*/
+import "@/assets/css/base.css";
 
 Vue.config.productionTip = false;
 //跨域请求，允许保存cookie
 axios.defaults.withCredentials = true;
 Vue.prototype.$axios = axios;
-
 Vue.prototype.$qs = qs;
-
 Vue.prototype.$f2 = f2;
-
 Vue.prototype.$util = {
   getUrlParam (paramKey) {
     // 参数正则
@@ -52,26 +30,24 @@ Vue.prototype.$util = {
   }
 };
 
-Vue.component(ScrollView.name, ScrollView);
 Vue.component(TableList.name, TableList);
+Vue.component(PageView.name, PageView);
+Vue.component(PageScroll.name, PageScroll);
 
-Vue.use(Row)
-  .use(Col)
-  .use(NavBar)
-  .use(Button)
-  .use(List)
-  .use(Field)
-  .use(CellGroup)
-  .use(Dialog)
-  .use(Loading)
-  .use(Toast)
-  .use(Picker)
-  .use(Popup)
-  .use(Actionsheet)
-  .use(Icon);
+Vue.use(Vant);
 
 new Vue({
   router,
-  store,
-  render: h => h(App)
+  // store,
+  render: h => h(App),
+  created () {
+    if (this.$route.path !== "/")
+      return this.$router.replace("/");
+    // 微信用户信息
+    localStorage.userInfo = JSON.stringify({});
+    // 首页用户基本信息
+    localStorage.wxUserBaseInfo = JSON.stringify({});
+    // 首页菜单权限
+    localStorage.menuLimit = "";
+  }
 }).$mount("#app");

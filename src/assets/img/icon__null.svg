@@ -55,10 +55,10 @@
     fill="url(#abca9755-bed1-4a97-b027-7f02ee3ffa09)"></path>
   <rect x="375.66" y="136.55" width="199.84" height="47.27"
         transform="translate(-212.94 43.72) rotate(-12.11)"
-        fill="#2ecc71"></rect>
+        fill="#17b356"></rect>
   <path
     d="M460.93,91.9a27.93,27.93,0,1,0,33.17,21.45A27.93,27.93,0,0,0,460.93,91.9ZM470.17,135a16.12,16.12,0,1,1,12.38-19.14A16.12,16.12,0,0,1,470.17,135Z"
-    transform="translate(-189.92 -59.59)" fill="#2ecc71"></path>
+    transform="translate(-189.92 -59.59)" fill="#17b356"></path>
   <rect x="257.89" y="116.91" width="437.02" height="603.82"
         fill="#e0e0e0"></rect>
   <g opacity="0.5">
@@ -73,10 +73,10 @@
     transform="translate(-189.92 -59.59)"
     fill="url(#7d32e13e-a0c7-49c4-af0e-066a2f8cb76e)"></path>
   <rect x="377.02" y="104.56" width="199.84" height="47.27"
-        fill="#2ecc71"></rect>
+        fill="#17b356"></rect>
   <path
     d="M666.86,118a27.93,27.93,0,1,0,27.93,27.93A27.93,27.93,0,0,0,666.86,118Zm0,44.05A16.12,16.12,0,1,1,683,145.89,16.12,16.12,0,0,1,666.86,162Z"
-    transform="translate(-189.92 -59.59)" fill="#2ecc71"></path>
+    transform="translate(-189.92 -59.59)" fill="#17b356"></path>
   <g opacity="0.5">
     <rect x="15.27" y="737.05" width="3.76" height="21.33"
           fill="#47e6b1"></rect>

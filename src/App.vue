@@ -1,156 +1,15 @@
 <template>
   <div id="app" v-cloak @touchmove.stop.prevent>
-
-    <!-- 页面缓存 -->
     <transition name="van-fade" mode="out-in">
-      <keep-alive>
-        <router-view name="mainKeep"/>
-      </keep-alive>
+      <router-view/>
     </transition>
-
-    <!-- 页面不缓存 -->
-    <transition name="van-fade" mode="out-in">
-      <router-view name="sub"/>
-    </transition>
-
   </div>
 </template>
 
 <script>
-  import { mapGetters, mapMutations } from "vuex";
-
   export default {
-    name: "App",
-    computed: mapGetters(["userInfo"]),
-    methods: {
-      ...mapMutations({
-        setUserInfo: "userInfo",
-        setWxUserBaseInfo: "wxUserBaseInfo",
-        setMenuLimit: "menuLimit"
-      }),
-      // 微信用户信息
-      getWxUserInfo () {
-        let _this = this;
-        let accessCode = _this.$util.getUrlParam("code");
-        // 未授权
-        if (!accessCode) {
-          //获取授权code的回调地址，获取到code，直接返回到当前页
-          location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4e2cf38426225453&redirect_uri=" +
-            encodeURIComponent(location.href) + "&response_type=code&scope=snsapi_userinfo&state=0#wechat_redirect";
-        }
-        else {
-          _this.$axios.get("/wx/userInfo", {
-            params: {
-              code: accessCode,
-              state: 0
-            }
-          }).then(function (response) {
-            let data = response.data;
-            // 用户信息
-            if (data && data.userInfo) {
-              _this.setUserInfo(data.userInfo);
-              _this.$nextTick(function () {
-                _this.login();
-              });
-            } else {
-              _this.$dialog.alert({
-                title: "系统出错",
-                message: "系统正在维护，请稍候再试"
-              }).then(function () {
-                WeixinJSBridge.call("closeWindow");
-              });
-              _this.$router.push("/Error");
-            }
-          }).catch(function (error) {
-            _this.$dialog.alert({
-              title: "系统出错",
-              message: "系统正在维护，请稍候再试"
-            }).then(function () {
-              WeixinJSBridge.call("closeWindow");
-            });
-            _this.$router.push("/Error");
-          });
-        }
-      },
-      // 微信用户信息 新的接口
-      getWxUserInfoNew () {
-        let _this = this;
-        _this.$axios.get("/wx/wxUserInfo").then(function (response) {
-          let data = response.data;
-          // 用户信息
-          if (data && data.userInfo) {
-            _this.setUserInfo(data.userInfo);
-            _this.$nextTick(function () {
-              _this.login();
-            });
-          } else {
-            _this.$dialog.alert({
-              title: "系统出错",
-              message: "系统正在维护，请稍候再试"
-            }).then(function () {
-              WeixinJSBridge.call("closeWindow");
-            });
-            _this.$router.push("/Error");
-          }
-        }).catch(function (error) {
-          _this.$dialog.alert({
-            title: "系统出错",
-            message: "系统正在维护，请稍候再试"
-          }).then(function () {
-            WeixinJSBridge.call("closeWindow");
-          });
-          _this.$router.push("/Error");
-        });
-      },
-      // 登录
-      login () {
-        let _this = this;
-        _this.$axios.post("/api/wxLogin", _this.$qs.stringify({
-          //  || "ohZpd0tPFpAeGZweVQEuinaa5H8M"
-          openId: _this.userInfo.openId
-        }), {
-          withCredentials: true
-        })
-          .then(function (response) {
-            let data = response.data;
-            if (data && data.code === 0) {
-              // _this.setMenuLimit(
-              //   "settle:userIncome:view,business:place:view,business:device:view,advertise:adSchedule:view,business:tissueRecord:view,business:device:view");
-              // 菜单权限
-              _this.setMenuLimit(data.msg ? data.msg.toString() : "");
-              // 用户头像、名字
-              _this.setWxUserBaseInfo({
-                name: data.name,
-                headImg: data.headImg
-              });
-              // 路由跳转
-              _this.$nextTick(function () {
-                _this.$router.push("/Home");
-              });
-            }
-            else {
-              _this.$dialog.alert({
-                title: "系统",
-                message: "您的微信未绑定智媒纸巾管理员，请联系管理员注册加入鼎善智媒纸巾机项目"
-              }).then(function () {
-                WeixinJSBridge.call("closeWindow");
-              });
-              _this.$router.push("/Error");
-            }
-          }).catch(function (error) {
-            _this.$dialog.alert({
-              title: "系统出错",
-              message: "系统正在维护，请稍候再试"
-            }).then(function () {
-              WeixinJSBridge.call("closeWindow");
-            });
-        });
-      }
-    },
     created () {
-      this.getWxUserInfo();
-      // this.login();
-      // this.$router.push("/Error");
+      this.$router.replace("/login");
     }
   };
 </script>
@@ -173,32 +32,57 @@
     background-color: #f6f6f6;
   }
 
+  .block__table-record {
+    position: relative;
+  }
+
   .block__loading {
     z-index: 10;
     position: absolute;
-    top: 0;
+    top: 30px;
     right: 0;
     bottom: 0;
     left: 0;
-    background: url("./assets/img/icon__loading.svg") no-repeat center center/100% 15px #fff;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    .block__loading-icon {
+      display: inline-block;
+      vertical-align: middle;
+      width: 40px;
+      height: 30px;
+      margin: 0 auto;
+      background: url("./assets/img/spinning-circles.svg") no-repeat center center/26px #fff;
+    }
+
+    .block__loading-text {
+      display: inline-block;
+      vertical-align: middle;
+      height: 30px;
+      line-height: 30px;
+      margin: 0 auto;
+      font-size: 14px;
+    }
   }
 
   .block__null {
     z-index: 1;
     position: absolute;
-    top: 0;
+    top: 30px;
     right: 0;
     bottom: 0;
     left: 0;
+    height: 230px;
+    padding: 15px 0;
     overflow: auto;
-    background: url("./assets/img/icon__null.svg") no-repeat center 70px/ auto 200px #fff;
+    background: url("./assets/img/icon__null.svg") no-repeat center center/ auto 150px #fff;
 
     .block__null-text {
       position: absolute;
-      top: calc(70px + 100px);
-      left: calc(50% + 15px);
+      top: calc(15px + 100px);
+      left: calc(50% + 13px);
       text-align: center;
-      font-size: 16px;
+      font-size: 14px;
       transform: translate(-50%, -50%);
     }
   }

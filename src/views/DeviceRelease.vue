@@ -1,15 +1,14 @@
 <template>
-  <div class="page-view" full>
+  <page-view :iphone-bar="false">
     <van-nav-bar
       class="nav-bar"
       title="设备投放"
       left-text="返回"
       left-arrow
       @click-left="$router.back()"/>
-
-    <scroll-view>
-      <van-cell-group class="input-group ">
-
+    <page-scroll height="calc(100vh - 1.17333rem)"
+                 :iphone-bar="false">
+      <van-cell-group class="input-group">
         <div class="field-query ">
           <van-field
             v-model="device.deviceSn"
@@ -17,7 +16,10 @@
             placeholder="填写设备编号"
             clearable
             @click.native.stop/>
-          <scroll-view class="field-query__view" v-show="fieldQueryShow">
+          <page-scroll class="field-query__view"
+                       v-show="fieldQueryShow"
+                       :iphone-bar="false"
+                       height="190px">
             <div class="field-query__item van-ellipsis van-hairline--bottom"
                  v-if="!this.fieldQueryData.length">未查询到此设备编号
             </div>
@@ -26,40 +28,35 @@
                  :key="index"
                  @click.stop="fieldQueryDataClick(item)">{{item.deviceSn}}
             </div>
-          </scroll-view>
+          </page-scroll>
         </div>
-
         <van-field
           v-model="place.name"
           label="投放场所"
           placeholder="选择投放场所"
-          @click.native.prevent="placePopup = true"/>
+          @touchstart.native="onPlaceTouchStart"/>
       </van-cell-group>
-
       <van-button type="default"
                   class="submit-btn"
                   block
                   :disabled="!(!!device.deviceSn && !!place.name)"
                   @click="submitClick">确认
       </van-button>
-
-    </scroll-view>
-
+    </page-scroll>
     <!-- 设备列表 -->
     <van-popup v-model="placePopup" position="bottom">
       <van-picker :columns="placePickerColumns"
                   value-key="name"
                   show-toolbar
-                  title="选择设备"
+                  title="选择场所"
                   @cancel="placePopup = false"
                   @confirm="placePickerConfirm"/>
     </van-popup>
-  </div>
+  </page-view>
 </template>
 
 <script>
   export default {
-    name: "DeviceRelease",
     data () {
       return {
         // 设备编号
@@ -80,9 +77,9 @@
           name: "",
           placeId: ""
         },
-        // 设备弹出层
+        // 场所弹出层
         placePopup: false,
-        // 设备选择器数据
+        // 场所选择器数据
         placePickerColumns: []
       };
     },
@@ -102,17 +99,18 @@
       }
     },
     methods: {
+      // 选择场所
+      onPlaceTouchStart (event) {
+        event.preventDefault();
+        this.placePopup = true;
+      },
       // 设备模糊查询
       fieldQueryOnline () {
         let _this = this;
-
         _this.$axios.post("/api/settle/settlementParam/selectdeviceAll", _this.$qs.stringify({
           deviceSn: _this.device.deviceSn
-        }), {
-          withCredentials: true
-        }).then(function (response) {
+        })).then(function (response) {
           let data = response.data;
-
           _this.fieldQueryData = data.list;
         }).catch(function () {
           _this.$toast.fail("系统繁忙！");
@@ -127,22 +125,9 @@
       // 获取场所列表
       getPlaceList () {
         let _this = this;
-
-        _this.$axios.post("/api/settle/settlementParam/selectplaceAll", {}, {
-          withCredentials: true
-        }, {
-          withCredentials: true
-        }).then(function (response) {
+        _this.$axios.post("/api/settle/settlementParam/selectplaceAll").then(function (response) {
           let data = response.data;
-
           _this.placePickerColumns = data.list;
-        }).cache(function (error) {
-          _this.$dialog.alert({
-            title: "系统繁忙",
-            message: "系统繁忙，请稍候再试"
-          }).then(function () {
-            WeixinJSBridge.call("closeWindow");
-          });
         });
       },
       // 场所选择确定
@@ -161,15 +146,14 @@
         _this.$axios.post("/api/settle/settlementParam/deviceSave", _this.$qs.stringify({
           deviceId: _this.device.deviceId,
           placeId: _this.place.placeId
-        }), {
-          withCredentials: true
-        }).then(function (response) {
+        })).then(function (response) {
 
         }).catch(function (error) {
-          setTimeout(function () {
-            _this.$toast.clear();
-            _this.$router.replace("/home");
-          }, 3000);
+          _this.$toast.clear();
+          _this.$dialog.alert({
+            title: "系统繁忙",
+            message: "系统繁忙，请稍候再试"
+          });
         });
       }
     },

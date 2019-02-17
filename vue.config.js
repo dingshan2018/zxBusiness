@@ -9,19 +9,13 @@ module.exports = {
     disableHostCheck: true,
     port: 9090,
     // 跨域代理
-    proxy: {
+    /*proxy: {
       "^/api": {
-        target: "http://mp.bp.zcloudtechs.cn",
-        ws: true,
-        changeOrigin: true
-      },
-      "/settle": {
-        target: "http://192.168.1.9:8086",
-        // target: "http://192.168.10.149:8086",
+        // target: "http://mp.bp.zcloudtechs.cn",
         ws: true,
         changeOrigin: true
       }
-    }
+    }*/
   },
   // webpack配置
   chainWebpack: config => {

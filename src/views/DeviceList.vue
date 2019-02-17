@@ -1,27 +1,37 @@
 <template>
-  <div class="page-view" full>
+  <page-view :iphone-bar="false">
     <van-nav-bar
       class="nav-bar"
       title="设备列表"
       left-text="返回"
       left-arrow
       @click-left="$router.back()"/>
-
-    <scroll-view
-      :pull-up-offset="pullUpOffset"
-      :pull-up-load="pullUpLoad"
-      :pull-up-finished="pullUpFinished"
-      @pull-up-finish="pullUpFinish">
-      <table-list :columns="tableColumns" :data="tableData"></table-list>
-    </scroll-view>
-  </div>
+    <page-scroll height="calc(100vh - 1.17333rem)"
+                 :iphone-bar="false"
+                 :pull-up-offset="pullUpOffset"
+                 :pull-up-load="pullUpLoad"
+                 :pull-up-finished="pullUpFinished"
+                 @pull-up-finish="pullUpFinish">
+      <div class="block__table-record">
+        <div class="block__loading" v-if="tableLoading">
+          <span class="block__loading-icon"></span>
+          <span class="block__loading-text">加载中...</span>
+        </div>
+        <div class="block__null" v-if="!tableLoading && !tableData.length">
+          <span class="block__null-text">暂无数据</span>
+        </div>
+        <table-list :columns="tableColumns" :data="tableData"></table-list>
+      </div>
+    </page-scroll>
+  </page-view>
 </template>
 
 <script>
   export default {
-    name: "DeviceList",
     data () {
       return {
+        // 加载
+        tableLoading: true,
         // 表格列
         tableColumns: [
           {
@@ -56,17 +66,13 @@
       getDeviceList () {
         let _this = this;
         _this.pullUpLoad = true;
-
         _this.$axios.post("/api/settle/settlementParam/selecdevicelist", _this.$qs.stringify({
           page: _this.page,
           limit: _this.limit,
           placeId: _this.$route.query.placeId
-        }), {
-          withCredentials: true
-        }).then(function (response) {
+        })).then(function (response) {
+          _this.tableLoading = false;
           let data = response.data;
-          if (!data) return;
-
           _this.totalCount = data.totalCount;
           _this.page = data.page;
           _this.limit = data.limit;
@@ -81,8 +87,6 @@
           _this.$dialog.alert({
             title: "系统繁忙",
             message: "系统繁忙，请稍候再试"
-          }).then(function () {
-            WeixinJSBridge.call("closeWindow");
           });
         });
       },
