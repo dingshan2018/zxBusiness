@@ -79,11 +79,6 @@ export default new Router({
       }
     },
     {
-      path: "/",
-      name: "Null",
-      redirect: "/Home"
-    },
-    {
       path: "/Error",
       name: "Error",
       // redirect: '/Login'
