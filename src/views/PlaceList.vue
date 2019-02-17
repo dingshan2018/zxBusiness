@@ -71,28 +71,31 @@
       getPlaceList () {
         let _this = this;
         _this.pullUpLoad = true;
-        _this.$axios.post("/api/settle/settlementParam/selectzxplacelist", _this.$qs.stringify({
-          page: _this.page,
-          limit: _this.limit
-        })).then(function (response) {
-          _this.tableLoading = false;
-          let data = response.data;
-          _this.totalCount = data.totalCount;
-          _this.page = data.page;
-          _this.limit = data.limit;
-          _this.tableData = data.list;
-          // 上拉加载完成
-          _this.pullUpLoad = false;
-          if (parseInt(_this.limit) >= parseInt(_this.totalCount)) {
-            return _this.pullUpFinished = true;
-          }
-        }).catch(function (error) {
-          _this.pullUpFinished = true;
-          _this.$dialog.alert({
-            title: "系统繁忙",
-            message: "系统繁忙，请稍候再试"
+        _this.$axios.post("/api/settle/settlementParam/selectzxplacelist",
+          _this.$qs.stringify({
+            page: _this.page,
+            limit: _this.limit
+          }))
+          .then(function (response) {
+            _this.tableLoading = false;
+            let data = response.data;
+            _this.totalCount = data.totalCount;
+            _this.page = data.page;
+            _this.limit = data.limit;
+            _this.tableData = data.list;
+            // 上拉加载完成
+            _this.pullUpLoad = false;
+            if (parseInt(_this.limit) >= parseInt(_this.totalCount)) {
+              return _this.pullUpFinished = true;
+            }
+          })
+          .catch(function (error) {
+            _this.pullUpFinished = true;
+            _this.$dialog.alert({
+              title: "系统繁忙",
+              message: "系统繁忙，请稍候再试"
+            });
           });
-        });
       },
       // 上拉加载
       pullUpFinish () {

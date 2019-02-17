@@ -52,7 +52,7 @@
       width: 40px;
       height: 30px;
       margin: 0 auto;
-      background: url("./assets/img/spinning-circles.svg") no-repeat center center/26px #fff;
+      background: url("./assets/icon/spinning-circles.svg") no-repeat center center/26px #fff;
     }
 
     .block__loading-text {
@@ -75,7 +75,7 @@
     height: 230px;
     padding: 15px 0;
     overflow: auto;
-    background: url("./assets/img/icon__null.svg") no-repeat center center/ auto 150px #fff;
+    background: url("./assets/icon/icon__null.svg") no-repeat center center/ auto 150px #fff;
 
     .block__null-text {
       position: absolute;

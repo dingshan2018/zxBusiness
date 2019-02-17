@@ -107,17 +107,19 @@
       // 出纸记录排名
       getAdPlanClickRanking () {
         let _this = this;
-        _this.$axios.post("/api/settle/settlementParam/tissuerecordStatistics").then(function (response) {
-          _this.chartLoading = false;
-          let data = response.data;
-          _this.outPaperRecordRanking = data.list;
-          _this.initAdChart();
-        }).catch(function (error) {
-          _this.$dialog.alert({
-            title: "系统繁忙",
-            message: "系统繁忙，请稍候再试"
+        _this.$axios.post("/api/settle/settlementParam/tissuerecordStatistics")
+          .then(function (response) {
+            _this.chartLoading = false;
+            let data = response.data;
+            _this.outPaperRecordRanking = data.list;
+            _this.initAdChart();
+          })
+          .catch(function (error) {
+            _this.$dialog.alert({
+              title: "系统繁忙",
+              message: "系统繁忙，请稍候再试"
+            });
           });
-        });
       },
       // 出纸列表
       getAdPlanList () {

@@ -24,40 +24,44 @@
             encodeURIComponent(location.href) + "&response_type=code&scope=snsapi_userinfo&state=0#wechat_redirect";
         }
         // 授权
-        _this.$axios.get("/wx/userInfo", {
-          params: {
-            code: accessCode,
-            state: 0
-          }
-        }).then(function (response) {
-          let data = response.data;
-          if (!data && !data.userInfo) {
+        _this.$axios.get("/wx/userInfo",
+          {
+            params: {
+              code: accessCode,
+              state: 0
+            }
+          })
+          .then(function (response) {
+            let data = response.data;
+            if (!data && !data.userInfo) {
+              _this.$dialog.alert({
+                title: "系统出错",
+                message: "系统正在维护，请稍候再试"
+              }).then(function () {
+                WeixinJSBridge.call("closeWindow");
+              });
+            }
+            // 用户信息
+            localStorage.userInfo = JSON.stringify(data.userInfo);
+            _this.login();
+          })
+          .catch(function (error) {
             _this.$dialog.alert({
               title: "系统出错",
               message: "系统正在维护，请稍候再试"
             }).then(function () {
               WeixinJSBridge.call("closeWindow");
             });
-          }
-          // 用户信息
-          localStorage.userInfo = JSON.stringify(data.userInfo);
-          _this.login();
-        }).catch(function (error) {
-          _this.$dialog.alert({
-            title: "系统出错",
-            message: "系统正在维护，请稍候再试"
-          }).then(function () {
-            WeixinJSBridge.call("closeWindow");
           });
-        });
       },
       // 登录
       login () {
         let _this = this;
-        _this.$axios.post("/api/wxLogin", _this.$qs.stringify({
-          //  || "ohZpd0tPFpAeGZweVQEuinaa5H8M"
-          openId: JSON.parse(localStorage.userInfo).openId
-        }))
+        _this.$axios.post("/api/wxLogin",
+          _this.$qs.stringify({
+            //  || "ohZpd0tPFpAeGZweVQEuinaa5H8M"
+            openId: JSON.parse(localStorage.userInfo).openId
+          }))
           .then(function (response) {
             let data = response.data;
             if (!data && data.code !== 0) {
@@ -90,29 +94,6 @@
     },
     created () {
       this.getWxUserInfo();
-      // 用户信息
-      // localStorage.userInfo = JSON.stringify({
-      //   "wxUserId": 2,
-      //   "userId": 47,
-      //   "subscribe": 1,
-      //   "openId": "ohZpd0tPFpAeGZweVQEuinaa5H8M",
-      //   "nickname": "做梦都是香的",
-      //   "sexDesc": "男",
-      //   "sex": 1,
-      //   "language": "zh_CN",
-      //   "city": "福州",
-      //   "province": "福建",
-      //   "country": "中国",
-      //   "headImgUrl": "http://thirdwx.qlogo.cn/mmopen/ajNVdqHZLLATh1hlHT4mtbdZZvr4HnNSTOWiciaSkfcnBibCPQ0mlF8TCtwpL4icpxavhC4GBIHDjwG7FGfSlicDyxA/132",
-      //   "subscribeTime": "2019-01-03 15:57:52",
-      //   "unionId": null,
-      //   "remark": "",
-      //   "createBy": "关注公众号",
-      //   "createTime": "2018-11-27 20:08:43",
-      //   "updateBy": "关注公众号",
-      //   "updateTime": "2019-02-17 15:01:30"
-      // });
-      // this.login();
     }
   };
 </script>

@@ -90,59 +90,6 @@
             }
           })
           .catch(function (error) {
-            _this.tableLoading = false;
-            let response = {};
-            response.data = {
-              "limit": "50",
-              "page": "1",
-              "totalCount": 33,
-              "list": [
-                {"adIncome": 0.0, "serviceIncome": 0.0, "promotionIncome": 0.0, "coperatorName": "服务商222"},
-                {"adIncome": 0.0, "serviceIncome": 0.02, "promotionIncome": 0.0, "coperatorName": "二代理"},
-                {"adIncome": 0.0, "serviceIncome": 0.02, "promotionIncome": 0.0, "coperatorName": "测试机主1"},
-                {"adIncome": 0.0, "serviceIncome": 0.05, "promotionIncome": 0.0, "coperatorName": "测试机主1"},
-                {"adIncome": 0.0, "serviceIncome": 0.02, "promotionIncome": 0.0, "coperatorName": "测试机主1"},
-                {"adIncome": 0.0, "serviceIncome": 0.02, "promotionIncome": 0.0, "coperatorName": "测试机主1"},
-                {"adIncome": 0.0, "serviceIncome": 0.02, "promotionIncome": 0.0, "coperatorName": "测试机主1"},
-                {"adIncome": 0.0, "serviceIncome": 0.0, "promotionIncome": 0.0, "coperatorName": "测试机主1"},
-                {"adIncome": 0.0, "serviceIncome": 0.0, "promotionIncome": 0.0, "coperatorName": "服务商222"},
-                {"adIncome": 0.0, "serviceIncome": 0.0, "promotionIncome": 0.0, "coperatorName": "服务商222"},
-                {"adIncome": 0.0, "serviceIncome": 0.0, "promotionIncome": 0.0, "coperatorName": "服务商222"},
-                {"adIncome": 0.0, "serviceIncome": 0.0, "promotionIncome": 0.0, "coperatorName": "服务商222"},
-                {"adIncome": 0.0, "serviceIncome": 0.0, "promotionIncome": 0.0, "coperatorName": "服务商222"},
-                {"adIncome": 0.0, "serviceIncome": 0.0, "promotionIncome": 0.0, "coperatorName": "服务商222"},
-                {"adIncome": 0.0, "serviceIncome": 0.0, "promotionIncome": 0.0, "coperatorName": "服务商222"},
-                {"adIncome": 0.0, "serviceIncome": 0.0, "promotionIncome": 0.0, "coperatorName": "服务商222"},
-                {"adIncome": 0.0, "serviceIncome": 0.08, "promotionIncome": 0.0, "coperatorName": "宏鼎科技"},
-                {"adIncome": 0.0, "serviceIncome": 0.08, "promotionIncome": 0.0, "coperatorName": "宏鼎科技"},
-                {"adIncome": 0.0, "serviceIncome": 0.08, "promotionIncome": 0.0, "coperatorName": "宏鼎科技"},
-                {"adIncome": 0.0, "serviceIncome": 0.08, "promotionIncome": 0.0, "coperatorName": "宏鼎科技"},
-                {"adIncome": 0.0, "serviceIncome": 0.08, "promotionIncome": 0.0, "coperatorName": "宏鼎科技"},
-                {"adIncome": 0.0, "serviceIncome": 1.0, "promotionIncome": 0.0, "coperatorName": "宏鼎科技"},
-                {"adIncome": 0.0, "serviceIncome": 0.02, "promotionIncome": 0.0, "coperatorName": "测试机主1"},
-                {"adIncome": 0.0, "serviceIncome": 0.0, "promotionIncome": 0.0, "coperatorName": "一代理"},
-                {"adIncome": 0.0, "serviceIncome": 0.0, "promotionIncome": 0.0, "coperatorName": "服务商222"},
-                {"adIncome": 0.0, "serviceIncome": 0.04, "promotionIncome": 0.0, "coperatorName": "宏鼎科技"},
-                {"adIncome": 0.05, "serviceIncome": 0.0, "promotionIncome": 0.0, "coperatorName": "服务商222"},
-                {"adIncome": 0.0, "serviceIncome": 0.0, "promotionIncome": -0.07, "coperatorName": "一代理"},
-                {"adIncome": 0.3, "serviceIncome": 0.02, "promotionIncome": 0.0, "coperatorName": "测试机主1"},
-                {"adIncome": 0.35, "serviceIncome": 0.0, "promotionIncome": 0.0, "coperatorName": "服务商222"},
-                {"adIncome": 4.3, "serviceIncome": 0.02, "promotionIncome": 0.0, "coperatorName": "测试机主1"},
-                {"adIncome": 0.0, "serviceIncome": 0.0, "promotionIncome": 651.43, "coperatorName": "一代理"},
-                {"adIncome": 0.0, "serviceIncome": 0.05, "promotionIncome": 0.0, "coperatorName": "宏鼎科技"}
-              ]
-            };
-            let data = response.data;
-            _this.totalCount = data.totalCount;
-            _this.page = data.page;
-            _this.limit = data.limit;
-            _this.tableData = data.list;
-            // 上拉加载完成
-            _this.pullUpLoad = false;
-            if (parseInt(_this.limit) >= parseInt(_this.totalCount)) {
-              return _this.pullUpFinished = true;
-            }
-            return;
             _this.pullUpFinished = true;
             _this.$dialog.alert({
               title: "系统繁忙",

@@ -125,10 +125,11 @@
       // 获取场所列表
       getPlaceList () {
         let _this = this;
-        _this.$axios.post("/api/settle/settlementParam/selectplaceAll").then(function (response) {
-          let data = response.data;
-          _this.placePickerColumns = data.list;
-        });
+        _this.$axios.post("/api/settle/settlementParam/selectplaceAll")
+          .then(function (response) {
+            let data = response.data;
+            _this.placePickerColumns = data.list;
+          });
       },
       // 场所选择确定
       placePickerConfirm (item, index) {
@@ -143,18 +144,21 @@
           forbidClick: true,
           message: "加载中..."
         });
-        _this.$axios.post("/api/settle/settlementParam/deviceSave", _this.$qs.stringify({
-          deviceId: _this.device.deviceId,
-          placeId: _this.place.placeId
-        })).then(function (response) {
+        _this.$axios.post("/api/settle/settlementParam/deviceSave",
+          _this.$qs.stringify({
+            deviceId: _this.device.deviceId,
+            placeId: _this.place.placeId
+          }))
+          .then(function (response) {
 
-        }).catch(function (error) {
-          _this.$toast.clear();
-          _this.$dialog.alert({
-            title: "系统繁忙",
-            message: "系统繁忙，请稍候再试"
+          })
+          .catch(function (error) {
+            _this.$toast.clear();
+            _this.$dialog.alert({
+              title: "系统繁忙",
+              message: "系统繁忙，请稍候再试"
+            });
           });
-        });
       }
     },
     created () {

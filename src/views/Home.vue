@@ -13,31 +13,31 @@
       <section class="menu-section" v-if="menuLimit.length">
         <div class="menu-item van-col--6" v-if="menuLimitHas('settle:userIncome:view')">
           <router-link to="/ProfitCount">
-            <img class="menu-item__icon" src="../assets/img/icon__ProfitCount.png"/>
+            <img class="menu-item__icon" src="../assets/icon/icon__ProfitCount.png"/>
             <span class="menu-item__name van-ellipsis">收益统计</span>
           </router-link>
         </div>
         <div class="menu-item van-col--6" v-if="menuLimitHas('business:place:view')">
           <router-link to="/PlaceList">
-            <img class="menu-item__icon" src="../assets/img/icon__PlaceList.png"/>
+            <img class="menu-item__icon" src="../assets/icon/icon__PlaceList.png"/>
             <span class="menu-item__name van-ellipsis">场所列表</span>
           </router-link>
         </div>
         <div class="menu-item van-col--6" v-if="menuLimitHas('business:device:view')">
           <router-link to="/DeviceRelease">
-            <img class="menu-item__icon" src="../assets/img/icon__DeviceRelease.png"/>
+            <img class="menu-item__icon" src="../assets/icon/icon__DeviceRelease.png"/>
             <span class="menu-item__name van-ellipsis">设备投放</span>
           </router-link>
         </div>
         <div class="menu-item van-col--6" v-if="menuLimitHas('advertise:adSchedule:view')">
           <router-link to="/AdPlan">
-            <img class="menu-item__icon" src="../assets/img/icon__AdPlan.png">
+            <img class="menu-item__icon" src="../assets/icon/icon__AdPlan.png">
             <span class="menu-item__name van-ellipsis">广告计划</span>
           </router-link>
         </div>
         <div class="menu-item van-col--6" v-if="menuLimitHas('business:tissueRecord:view')">
           <router-link to="/OutPaperRecord">
-            <img class="menu-item__icon" src="../assets/img/icon__OutPaperRecord.png"/>
+            <img class="menu-item__icon" src="../assets/icon/icon__OutPaperRecord.png"/>
             <span class="menu-item__name van-ellipsis">出纸记录</span>
           </router-link>
         </div>
@@ -115,38 +115,28 @@
       menuLimitHas (value) {
         return this.menuLimit.includes(value);
       },
-      // 出纸记录 /api
+      // 出纸记录
       getOutPagerRecord (page, limit) {
         let _this = this;
-        _this.$axios.post("/settle/settlementParam/selectzxtissuerecordlist", _this.$qs.stringify({
-          page: _this.page,
-          limit: _this.limit
-        })).then(function (response) {
-          _this.tableLoading = false;
-          let data = response.data;
-          _this.totalCount = data.totalCount;
-          _this.page = data.page;
-          _this.limit = data.limit;
-          _this.tableData = data.list;
-        }).catch(function (error) {
-          // _this.tableLoading = false;
-          let response = {};
-          response.data = {
-            "limit": "5", "page": "1", "totalCount": 0, "list": []
-          };
-          let data = response.data;
-          _this.totalCount = data.totalCount;
-          _this.page = data.page;
-          _this.limit = data.limit;
-          _this.tableData = data.list;
-          return;
-          _this.$dialog.alert({
-            title: "系统繁忙",
-            message: "系统繁忙，请稍候再试"
-          }).then(function () {
-            WeixinJSBridge.call("closeWindow");
+        _this.$axios.post("/settle/settlementParam/selectzxtissuerecordlist",
+          _this.$qs.stringify({
+            page: _this.page,
+            limit: _this.limit
+          }))
+          .then(function (response) {
+            _this.tableLoading = false;
+            let data = response.data;
+            _this.totalCount = data.totalCount;
+            _this.page = data.page;
+            _this.limit = data.limit;
+            _this.tableData = data.list;
+          })
+          .catch(function (error) {
+            _this.$dialog.alert({
+              title: "系统繁忙",
+              message: "系统繁忙，请稍候再试"
+            });
           });
-        });
       },
       // 上一页
       paginationPrev () {

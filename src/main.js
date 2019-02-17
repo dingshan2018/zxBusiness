@@ -41,6 +41,7 @@ new Vue({
   // store,
   render: h => h(App),
   created () {
+    // 刷新
     if (this.$route.path !== "/")
       return this.$router.replace("/");
     // 微信用户信息
