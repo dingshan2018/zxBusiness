@@ -15,6 +15,8 @@
 </script>
 
 <style lang="less">
+  @base-green: #0ba84c;
+
   .input-group {
     margin-top: 40px;
 
@@ -43,8 +45,6 @@
     right: 0;
     bottom: 0;
     left: 0;
-    height: 60px;
-    line-height: 60px;
     text-align: center;
     .block__loading-icon {
       display: inline-block;
@@ -52,7 +52,7 @@
       width: 40px;
       height: 30px;
       margin: 0 auto;
-      background: url("./assets/icon/spinning-circles.svg") no-repeat center center/26px #fff;
+      background: url("./assets/icon/loading__spinning-circles.svg") no-repeat center center/24px;
     }
 
     .block__loading-text {

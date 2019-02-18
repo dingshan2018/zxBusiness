@@ -1,10 +1,7 @@
 <template>
   <page-view :iphone-bar="false">
     <page-scroll full>
-      <div class="block__loading">
-        <span class="block__loading-icon"></span>
-        <span class="block__loading-text">加载中...</span>
-      </div>
+
     </page-scroll>
   </page-view>
 </template>
@@ -97,20 +94,4 @@
     }
   };
 </script>
-
-<style lang="less" scoped>
-  .block__loading {
-    .block__loading-icon {
-      display: block;
-      width: 56px;
-      height: 56px;
-      margin: 0 auto;
-      background-size: 80%;
-    }
-    .block__loading-text {
-      display: block;
-      font-size: 16px;
-    }
-  }
-</style>
 

@@ -159,8 +159,6 @@
 </script>
 
 <style lang="less" scoped>
-  @base-green: #00c292;
-
   .chart {
     width: 100%;
     height: 200px;

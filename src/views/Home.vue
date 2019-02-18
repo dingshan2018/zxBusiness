@@ -3,7 +3,6 @@
     <page-scroll full>
       <!-- 用户信息 -->
       <section class="user-info van-hairline--bottom">
-        <!--<img class="user-info__bg&#45;&#45;blur" :src="wxUserBaseInfo.headImg"/>-->
         <div class="user-info__content block__clear-both">
           <img class="user-info__avatar" :src="wxUserBaseInfo.headImg"/>
           <p class="user-info__name van-ellipsis animated">{{wxUserBaseInfo.name}}</p>
@@ -165,8 +164,6 @@
 </script>
 
 <style lang="less" scoped>
-  @base-green: #00c292;
-
   .user-info {
     position: relative;
     height: 140px;

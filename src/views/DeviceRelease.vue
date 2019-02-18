@@ -150,7 +150,14 @@
             placeId: _this.place.placeId
           }))
           .then(function (response) {
-
+            let data = response.data;
+            if (!data && data.code !== "0000") {
+              return _this.$dialog.alert({
+                title: "系统繁忙",
+                message: "系统繁忙，请稍候再试"
+              });
+            }
+            _this.$toast.success("操作成功");
           })
           .catch(function (error) {
             _this.$toast.clear();
@@ -168,7 +175,7 @@
 </script>
 
 <style lang="less" scoped>
-  @base-green: #00c292;
+  @base-green: #0ba84c;
 
   .field-query {
     position: relative;
