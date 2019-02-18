@@ -17,9 +17,7 @@
           <span class="block__loading-icon"></span>
           <span class="block__loading-text">加载中...</span>
         </div>
-        <div class="block__null" v-if="!tableLoading && !tableData.length">
-          <span class="block__null-text">暂无数据</span>
-        </div>
+        <div class="block__null" v-if="!tableLoading && !tableData.length"></div>
         <table-list :columns="tableColumns" :data="tableData" @onRow="toDeviceList"></table-list>
       </div>
     </page-scroll>
@@ -91,10 +89,6 @@
           })
           .catch(function (error) {
             _this.pullUpFinished = true;
-            _this.$dialog.alert({
-              title: "系统繁忙",
-              message: "系统繁忙，请稍候再试"
-            });
           });
       },
       // 上拉加载

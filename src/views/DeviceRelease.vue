@@ -113,7 +113,7 @@
           let data = response.data;
           _this.fieldQueryData = data.list;
         }).catch(function () {
-          _this.$toast.fail("系统繁忙！");
+          _this.$toast("系统繁忙，请稍后再试！");
         });
       },
       // 设备模糊查询选择
@@ -161,10 +161,7 @@
           })
           .catch(function (error) {
             _this.$toast.clear();
-            _this.$dialog.alert({
-              title: "系统繁忙",
-              message: "系统繁忙，请稍候再试"
-            });
+            _this.$toast("系统繁忙，请稍后再试！");
           });
       }
     },

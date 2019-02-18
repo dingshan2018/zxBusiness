@@ -1,7 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg"
      xmlns:xlink="http://www.w3.org/1999/xlink"
-     id="f20e0c25-d928-42cc-98d1-13cc230663ea" data-name="Layer 1" width="100%"
-     height="100%" viewBox="0 0 820.16 780.81"
+     id="f20e0c25-d928-42cc-98d1-13cc230663ea" data-name="Layer 1" viewBox="0 0 820.16 780.81"
      src="https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations/no_data_qbuo.svg"
      class="item__image" alt="No data">
   <defs>
@@ -34,7 +33,6 @@
                     gradientTransform="matrix(1, 0, 0, 1, 0, 0)"
                     xlink:href="#07332201-7176-49c2-9908-6dc4a39c4716"></linearGradient>
   </defs>
-  <title>no data</title>
   <rect x="317.5" y="142.55" width="437.02" height="603.82"
         transform="translate(-271.22 62.72) rotate(-12.11)"
         fill="#e0e0e0"></rect>
@@ -106,4 +104,8 @@
           opacity="0.5"></circle>
   <circle cx="87.14" cy="96.35" r="7.53" fill="#4d8af0" opacity="0.5"></circle>
   <circle cx="7.53" cy="301.76" r="7.53" fill="#47e6b1" opacity="0.5"></circle>
+  <text fill='#333' x='480' y='390'
+        style='font-size:4.5em;dominant-baseline:middle;text-anchor:middle;'>
+    暂无数据
+  </text>
 </svg>

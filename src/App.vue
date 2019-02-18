@@ -36,6 +36,7 @@
 
   .block__table-record {
     position: relative;
+    min-height: 200px;
   }
 
   .block__loading {
@@ -72,19 +73,11 @@
     right: 0;
     bottom: 0;
     left: 0;
-    height: 230px;
+    height: calc(100% - 30px);
+    min-height: 150px;
     padding: 15px 0;
     overflow: auto;
     background: url("./assets/icon/icon__null.svg") no-repeat center center/ auto 150px #fff;
-
-    .block__null-text {
-      position: absolute;
-      top: calc(15px + 100px);
-      left: calc(50% + 13px);
-      text-align: center;
-      font-size: 14px;
-      transform: translate(-50%, -50%);
-    }
   }
 
   .chart {
@@ -94,12 +87,6 @@
       top: 30px;
       background-position: center center;
       background-size: auto 120px;
-    }
-
-    .block__null-text {
-      top: 50%;
-      font-size: 12px;
-      left: calc(50% + 10px);
     }
   }
 </style>

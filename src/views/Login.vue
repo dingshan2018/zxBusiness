@@ -90,6 +90,12 @@
       }
     },
     created () {
+      this.$toast.loading({
+        mask: true,
+        forbidClick: true,
+        duration: 0,
+        message: "加载中..."
+      });
       this.getWxUserInfo();
     }
   };

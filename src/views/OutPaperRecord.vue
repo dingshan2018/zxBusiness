@@ -19,18 +19,14 @@
           <span class="block__loading-icon"></span>
           <span class="block__loading-text">加载中...</span>
         </div>
-        <div class="block__null" v-if="!chartLoading && !outPaperRecordRanking.length">
-          <span class="block__null-text">暂无数据</span>
-        </div>
+        <div class="block__null" v-if="!chartLoading && !outPaperRecordRanking.length"></div>
       </div>
       <div class="block__table-record">
         <div class="block__loading" v-if="tableLoading">
           <span class="block__loading-icon"></span>
           <span class="block__loading-text">加载中...</span>
         </div>
-        <div class="block__null" v-if="!tableLoading && !tableData.length">
-          <span class="block__null-text">暂无数据</span>
-        </div>
+        <div class="block__null" v-if="!tableLoading && !tableData.length"></div>
         <div class="block__model-title van-hairline--top van-hairline--bottom van-ellipsis">出纸记录</div>
         <table-list :columns="tableColumns" :data="tableData"></table-list>
       </div>
@@ -113,12 +109,6 @@
             let data = response.data;
             _this.outPaperRecordRanking = data.list;
             _this.initAdChart();
-          })
-          .catch(function (error) {
-            _this.$dialog.alert({
-              title: "系统繁忙",
-              message: "系统繁忙，请稍候再试"
-            });
           });
       },
       // 出纸列表

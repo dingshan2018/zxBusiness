@@ -47,9 +47,7 @@
           <span class="block__loading-icon"></span>
           <span class="block__loading-text">加载中...</span>
         </div>
-        <div class="block__null" v-if="!tableLoading && !tableData.length">
-          <span class="block__null-text">暂无数据</span>
-        </div>
+        <div class="block__null" v-if="!tableLoading && !tableData.length"></div>
         <div class="block__model-title van-hairline--top van-hairline--bottom van-ellipsis">最近出纸记录：</div>
         <table-list :columns="tableColumns" :data="tableData"></table-list>
         <van-row class="pagination" tag="ul" v-if="tableData.length">
@@ -117,7 +115,7 @@
       // 出纸记录
       getOutPagerRecord (page, limit) {
         let _this = this;
-        _this.$axios.post("/settle/settlementParam/selectzxtissuerecordlist",
+        _this.$axios.post("/api/settle/settlementParam/selectzxtissuerecordlist",
           _this.$qs.stringify({
             page: _this.page,
             limit: _this.limit
@@ -129,12 +127,6 @@
             _this.page = data.page;
             _this.limit = data.limit;
             _this.tableData = data.list;
-          })
-          .catch(function (error) {
-            _this.$dialog.alert({
-              title: "系统繁忙",
-              message: "系统繁忙，请稍候再试"
-            });
           });
       },
       // 上一页
