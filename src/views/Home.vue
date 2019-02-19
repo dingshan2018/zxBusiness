@@ -11,31 +11,31 @@
       <!-- 菜单 -->
       <section class="menu-section" v-if="menuLimit.length">
         <div class="menu-item van-col--6" v-if="menuLimitHas('settle:userIncome:view')">
-          <router-link to="/ProfitCount">
+          <router-link to="/profitCount">
             <img class="menu-item__icon" src="../assets/icon/icon__ProfitCount.png"/>
             <span class="menu-item__name van-ellipsis">收益统计</span>
           </router-link>
         </div>
         <div class="menu-item van-col--6" v-if="menuLimitHas('business:place:view')">
-          <router-link to="/PlaceList">
+          <router-link to="/placeList">
             <img class="menu-item__icon" src="../assets/icon/icon__PlaceList.png"/>
             <span class="menu-item__name van-ellipsis">场所列表</span>
           </router-link>
         </div>
         <div class="menu-item van-col--6" v-if="menuLimitHas('business:device:view')">
-          <router-link to="/DeviceRelease">
+          <router-link to="/deviceRelease">
             <img class="menu-item__icon" src="../assets/icon/icon__DeviceRelease.png"/>
             <span class="menu-item__name van-ellipsis">设备投放</span>
           </router-link>
         </div>
         <div class="menu-item van-col--6" v-if="menuLimitHas('advertise:adSchedule:view')">
-          <router-link to="/AdPlan">
+          <router-link to="/adPlan">
             <img class="menu-item__icon" src="../assets/icon/icon__AdPlan.png">
             <span class="menu-item__name van-ellipsis">广告计划</span>
           </router-link>
         </div>
         <div class="menu-item van-col--6" v-if="menuLimitHas('business:tissueRecord:view')">
-          <router-link to="/OutPaperRecord">
+          <router-link to="/outPaperRecord">
             <img class="menu-item__icon" src="../assets/icon/icon__OutPaperRecord.png"/>
             <span class="menu-item__name van-ellipsis">出纸记录</span>
           </router-link>

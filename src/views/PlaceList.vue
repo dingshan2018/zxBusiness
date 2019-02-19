@@ -98,7 +98,7 @@
         this.getPlaceList();
       },
       toDeviceList (target, rowData) {
-        this.$router.push({path: "/DeviceList", query: {placeId: rowData.placeId}});
+        this.$router.push({path: "/deviceList", query: {placeId: rowData.placeId}});
       }
     },
     created () {

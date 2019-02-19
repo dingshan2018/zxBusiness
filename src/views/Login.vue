@@ -77,7 +77,8 @@
               name: data.name,
               headImg: data.headImg
             });
-            _this.$router.replace("/Home");
+            _this.$toast.clear();
+            _this.$router.replace("/home");
           })
           .catch(function (error) {
             _this.$dialog.alert({

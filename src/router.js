@@ -14,35 +14,35 @@ Vue.use(Router);
 export default new Router({
   routes: [
     {
-      path: "/Login",
+      path: "/login",
       component: Login
     },
     {
-      path: "/Home",
+      path: "/home",
       component: Home
     },
     {
-      path: "/ProfitCount",
+      path: "/profitCount",
       component: ProfitCount
     },
     {
-      path: "/DeviceList",
+      path: "/deviceList",
       component: DeviceList
     },
     {
-      path: "/DeviceRelease",
+      path: "/deviceRelease",
       component: DeviceRelease
     },
     {
-      path: "/PlaceList",
+      path: "/placeList",
       component: PlaceList
     },
     {
-      path: "/AdPlan",
+      path: "/adPlan",
       component: AdPlan
     },
     {
-      path: "/OutPaperRecord",
+      path: "/outPaperRecord",
       component: OutPaperRecord
     }
   ]

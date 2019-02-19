@@ -42,8 +42,8 @@ new Vue({
   render: h => h(App),
   created () {
     // 刷新
-    if (this.$route.path !== "/")
-      return this.$router.replace("/");
+    if (this.$route.path !== "/" && this.$route.path !== "/login")
+      return location.href = "/";
     // 微信用户信息
     localStorage.userInfo = JSON.stringify({});
     // 首页用户基本信息
