@@ -47,17 +47,17 @@
         // 表格列
         tableColumns: [
           {
-            title: "所在场所",
-            key: "placeName"
-          },
-          {
-            title: "设备号",
+            title: "设备名称",
             key: "deviceSn",
             width: "90px"
           },
           {
+            title: "所在场所",
+            key: "placeName"
+          },
+          {
             title: "日期",
-            key: "Time"
+            key: "TIME"
           }
         ],
         // 表格数据
