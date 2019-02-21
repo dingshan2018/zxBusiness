@@ -57,7 +57,7 @@
         _this.$axios.post("/api/wxLogin",
           _this.$qs.stringify({
             //  || "ohZpd0tPFpAeGZweVQEuinaa5H8M"
-            openId: JSON.parse(localStorage.userInfo).openId || "ohZpd0tPFpAeGZweVQEuinaa5H8M"
+            openId: JSON.parse(localStorage.userInfo).openId
           }))
           .then(function (response) {
             let data = response.data;
@@ -87,14 +87,13 @@
       }
     },
     created () {
-      /*this.$toast.loading({
+      this.$toast.loading({
         mask: true,
         forbidClick: true,
         duration: 0,
         message: "加载中..."
       });
-      this.getWxUserInfo();*/
-      this.login();
+      this.getWxUserInfo();
     }
   };
 </script>
