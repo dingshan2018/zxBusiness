@@ -72,7 +72,9 @@
         _this.$axios.post("/api/settle/settlementParam/selecuserincomelist",
           _this.$qs.stringify({
             page: _this.page,
-            limit: _this.limit
+            limit: _this.limit,
+            coperatorType: JSON.parse(localStorage.wxUserBaseInfo).coperatorType,
+            coperatorId: JSON.parse(localStorage.wxUserBaseInfo).coperatorId
           }))
           .then(function (response) {
             _this.tableLoading = false;

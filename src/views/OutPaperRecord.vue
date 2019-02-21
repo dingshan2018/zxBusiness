@@ -47,17 +47,17 @@
         // 表格列
         tableColumns: [
           {
-            title: "设备名称",
-            key: "deviceName",
+            title: "所在场所",
+            key: "placeName"
+          },
+          {
+            title: "设备号",
+            key: "deviceSn",
             width: "90px"
           },
           {
-            title: "所在场所",
-            key: "place"
-          },
-          {
             title: "日期",
-            key: "time"
+            key: "Time"
           }
         ],
         // 表格数据
@@ -118,7 +118,9 @@
         _this.$axios.post("/api/settle/settlementParam/selectzxtissuerecordlist",
           _this.$qs.stringify({
             page: _this.page,
-            limit: _this.limit
+            limit: _this.limit,
+            userId: JSON.parse(localStorage.wxUserBaseInfo).userId,
+            placeId: JSON.parse(localStorage.wxUserBaseInfo).placeId
           }))
           .then(function (response) {
             _this.tableLoading = false;

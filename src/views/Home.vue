@@ -5,7 +5,7 @@
       <section class="user-info van-hairline--bottom">
         <div class="user-info__content block__clear-both">
           <img class="user-info__avatar" :src="wxUserBaseInfo.headImg"/>
-          <p class="user-info__name van-ellipsis animated">{{wxUserBaseInfo.name}}</p>
+          <p class="user-info__name van-ellipsis">{{coperatorType}}{{wxUserBaseInfo.name}}</p>
         </div>
       </section>
       <!-- 菜单 -->
@@ -42,7 +42,7 @@
         </div>
       </section>
       <!-- 最近出纸记录 -->
-      <div class="block__table-record">
+      <div class="block__table-record" v-if="menuLimitHas('business:tissueRecord:view')">
         <div class="block__loading" v-if="tableLoading">
           <span class="block__loading-icon"></span>
           <span class="block__loading-text">加载中...</span>
@@ -107,6 +107,32 @@
         limit: 5
       };
     },
+    computed: {
+      coperatorType () {
+        let type = "";
+        switch (this.wxUserBaseInfo.coperatorType) {
+          case "00":
+            type = "系统用户";
+            break;
+          case "01":
+            type = "合作伙伴";
+            break;
+          case "02":
+            type = "机主";
+            break;
+          case "03":
+            type = "代理商";
+            break;
+          case "04":
+            type = "服务商";
+            break;
+          case "05":
+            type = "广告商";
+            break;
+        }
+        return type && `【${type}】`;
+      }
+    },
     methods: {
       // 判断是否有该菜单权限
       menuLimitHas (value) {
@@ -118,7 +144,9 @@
         _this.$axios.post("/api/settle/settlementParam/selectzxtissuerecordlist",
           _this.$qs.stringify({
             page: _this.page,
-            limit: _this.limit
+            limit: _this.limit,
+            userId: JSON.parse(localStorage.wxUserBaseInfo).userId,
+            placeId: JSON.parse(localStorage.wxUserBaseInfo).placeId
           }))
           .then(function (response) {
             _this.tableLoading = false;

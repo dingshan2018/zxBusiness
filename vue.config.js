@@ -9,13 +9,13 @@ module.exports = {
     disableHostCheck: true,
     port: 9090,
     // 跨域代理
-    /*proxy: {
+    proxy: {
       "^/api": {
-        // target: "http://mp.bp.zcloudtechs.cn",
+        target: "http://mp.dingscm.com",
         ws: true,
         changeOrigin: true
       }
-    }*/
+    }
   },
   // webpack配置
   chainWebpack: config => {

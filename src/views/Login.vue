@@ -57,14 +57,14 @@
         _this.$axios.post("/api/wxLogin",
           _this.$qs.stringify({
             //  || "ohZpd0tPFpAeGZweVQEuinaa5H8M"
-            openId: JSON.parse(localStorage.userInfo).openId
+            openId: JSON.parse(localStorage.userInfo).openId || "ohZpd0tPFpAeGZweVQEuinaa5H8M"
           }))
           .then(function (response) {
             let data = response.data;
-            if (!data && data.code !== 0) {
+            if (!data || data.code !== 0) {
               return _this.$dialog.alert({
-                title: "系统",
-                message: "您的微信未绑定智媒纸巾管理员，请联系管理员注册加入鼎善智媒纸巾机项目"
+                title: "提示",
+                message: data.msg
               }).then(function () {
                 WeixinJSBridge.call("closeWindow");
               });
@@ -75,29 +75,26 @@
             // 用户头像、名字
             localStorage.wxUserBaseInfo = JSON.stringify({
               name: data.name,
-              headImg: data.headImg
+              headImg: data.headImg,
+              userId: data.userId,
+              placeId: data.placeId,
+              coperatorId: data.coperatorId,
+              coperatorType: data.coperatorType
             });
             _this.$toast.clear();
             _this.$router.replace("/home");
-          })
-          .catch(function (error) {
-            _this.$dialog.alert({
-              title: "系统出错",
-              message: "系统正在维护，请稍候再试"
-            }).then(function () {
-              WeixinJSBridge.call("closeWindow");
-            });
           });
       }
     },
     created () {
-      this.$toast.loading({
+      /*this.$toast.loading({
         mask: true,
         forbidClick: true,
         duration: 0,
         message: "加载中..."
       });
-      this.getWxUserInfo();
+      this.getWxUserInfo();*/
+      this.login();
     }
   };
 </script>

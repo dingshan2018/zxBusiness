@@ -2,7 +2,7 @@
   <page-view :iphone-bar="false">
     <van-nav-bar
       class="nav-bar"
-      title="设备投放"
+      title="申请投放"
       left-text="返回"
       left-arrow
       @click-left="$router.back()"/>
