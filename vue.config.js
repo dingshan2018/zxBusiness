@@ -11,9 +11,12 @@ module.exports = {
     // 跨域代理
     proxy: {
       "^/api": {
-        target: "http://mp.dingscm.com",
+        target: "http://192.168.10.149:8086" || "http://mp.dingscm.com",
         ws: true,
-        changeOrigin: true
+        changeOrigin: true,
+        pathRewrite: function (path, req) {
+          return path.replace("/api", "");
+        }
       }
     }
   },

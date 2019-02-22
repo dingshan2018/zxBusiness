@@ -178,7 +178,7 @@
       // 首页菜单权限
       this.menuLimit = localStorage.menuLimit.split(",");
       // 获取最近出纸记录
-      this.getOutPagerRecord();
+      this.$nextTick(() => this.menuLimitHas("business:tissueRecord:view") && this.getOutPagerRecord());
     }
   };
 </script>

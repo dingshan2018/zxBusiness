@@ -150,14 +150,18 @@
             placeId: _this.place.placeId
           }))
           .then(function (response) {
+            _this.$toast.clear();
             let data = response.data;
-            if (!data && data.code !== "0000") {
+            if (!data || data.code !== "0000") {
               return _this.$dialog.alert({
                 title: "系统繁忙",
                 message: "系统繁忙，请稍候再试"
               });
             }
-            _this.$toast.success("操作成功");
+            _this.$dialog.alert({
+              title: "提示",
+              message: "投放申请已提交"
+            }).then(() => _this.$router.back());
           })
           .catch(function (error) {
             _this.$toast.clear();
