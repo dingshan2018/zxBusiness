@@ -8,7 +8,6 @@ import Vant from "vant";
 import "vant/lib/index.css";
 import axios from "axios";
 import qs from "qs";
-import f2 from "@antv/f2";
 import "lib-flexible";
 import "@/assets/css/base.css";
 
@@ -17,7 +16,6 @@ Vue.config.productionTip = false;
 axios.defaults.withCredentials = true;
 Vue.prototype.$axios = axios;
 Vue.prototype.$qs = qs;
-Vue.prototype.$f2 = f2;
 Vue.prototype.$util = {
   getUrlParam (paramKey) {
     // 参数正则
@@ -41,6 +39,8 @@ new Vue({
   // store,
   render: h => h(App),
   created () {
+    // debugger
+    this.$util.getUrlParam("debug") && VConsole && new VConsole();
     // 刷新
     if (this.$route.path !== "/" && this.$route.path !== "/login")
       return location.href = "/";

@@ -14,7 +14,7 @@
                  @pull-up-finish="pullUpFinish">
       <div class="chart">
         <div class="block__model-title van-hairline--top van-hairline--bottom van-ellipsis">出纸记录排名</div>
-        <canvas v-if="outPaperRecordRanking.length" id="chartCanvas"></canvas>
+        <div v-if="outPaperRecordRanking.length" id="chartContainer"></div>
         <div class="block__loading" v-if="chartLoading">
           <span class="block__loading-icon"></span>
           <span class="block__loading-text">加载中...</span>
@@ -79,26 +79,53 @@
     },
     methods: {
       // 图表
-      initAdChart () {
-        let chart = new this.$f2.Chart({
-          id: "chartCanvas",
-          pixelRatio: window.devicePixelRatio
-        });
-        chart.source(this.outPaperRecordRanking, {
-          sales: {
-            tickCount: 5
-          }
-        });
-        chart.tooltip({
-          showItemMarker: false,
-          onShow: function onShow (ev) {
-            var items = ev.items;
-            items[0].name = null;
-            items[0].name = items[0].title;
-            // items[0].value = '¥ ' + items[0].value;
-          }
-        }).interval().position("name*num");
-        chart.render();
+      initChart () {
+        let _this = this;
+        if (!_this.outPaperRecordRanking.length) return;
+        let myChart = echarts.init(document.getElementById("chartContainer"));
+        let option = {
+          color: ["#0ba84c"],
+          grid: {
+            top: "20",
+            left: "3%",
+            right: "4%",
+            bottom: "3%",
+            containLabel: true
+          },
+          xAxis: [
+            {
+              type: "category",
+              data: _this.outPaperRecordRanking.map(value => value.name),
+              axisTick: {
+                alignWithLabel: true
+              }
+            }
+          ],
+          yAxis: [
+            {
+              type: "value"
+            }
+          ],
+          series: [
+            {
+              type: "bar",
+              barWidth: "55%",
+              data: _this.outPaperRecordRanking.map(value => value.num),
+              itemStyle: {
+                normal: {
+                  color: new echarts.graphic.LinearGradient(
+                    0, 0, 0, 1,
+                    [
+                      {offset: 0, color: "#38ef7d"},
+                      {offset: 0.8, color: "#0ba84c"}
+                    ]
+                  )
+                }
+              }
+            }
+          ]
+        };
+        myChart.setOption(option);
       },
       // 出纸记录排名
       getAdPlanClickRanking () {
@@ -108,7 +135,7 @@
             _this.chartLoading = false;
             let data = response.data;
             _this.outPaperRecordRanking = data.list;
-            _this.initAdChart();
+            _this.$nextTick(() => _this.initChart());
           });
       },
       // 出纸列表
@@ -155,10 +182,10 @@
     width: 100%;
     height: 200px;
     background-color: #fff;
+  }
 
-    canvas {
-      width: 100%;
-      height: calc(100% - 40px);
-    }
+  #chartContainer {
+    width: 100%;
+    height: calc(100% - 30px);
   }
 </style>

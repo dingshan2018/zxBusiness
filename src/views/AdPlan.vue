@@ -14,7 +14,7 @@
                  @pull-up-finish="pullUpFinish">
       <div class="chart">
         <div class="block__model-title van-hairline--top van-hairline--bottom van-ellipsis">广告点击量排名</div>
-        <canvas id="chartCanvas" v-if="adPlanClickRanking"></canvas>
+        <div v-if="adPlanClickRanking.length" id="chartContainer"></div>
         <div class="block__loading" v-if="chartLoading">
           <span class="block__loading-icon"></span>
           <span class="block__loading-text">加载中...</span>
@@ -85,26 +85,53 @@
     },
     methods: {
       // 图表
-      initAdChart () {
-        let chart = new this.$f2.Chart({
-          id: "chartCanvas",
-          pixelRatio: window.devicePixelRatio
-        });
-        chart.source(this.adPlanClickRanking, {
-          sales: {
-            tickCount: 5
-          }
-        });
-        chart.tooltip({
-          showItemMarker: false,
-          onShow: function onShow (ev) {
-            var items = ev.items;
-            items[0].name = null;
-            items[0].name = items[0].title;
-            // items[0].value = '¥ ' + items[0].value;
-          }
-        }).interval().position("name*num");
-        chart.render();
+      initChart () {
+        let _this = this;
+        if (!_this.adPlanClickRanking.length) return;
+        let myChart = echarts.init(document.getElementById("chartContainer"));
+        let option = {
+          color: ["#0ba84c"],
+          grid: {
+            top: "20",
+            left: "3%",
+            right: "4%",
+            bottom: "3%",
+            containLabel: true
+          },
+          xAxis: [
+            {
+              type: "category",
+              data: _this.adPlanClickRanking.map(value => value.name),
+              axisTick: {
+                alignWithLabel: true
+              }
+            }
+          ],
+          yAxis: [
+            {
+              type: "value"
+            }
+          ],
+          series: [
+            {
+              type: "bar",
+              barWidth: "55%",
+              data: _this.adPlanClickRanking.map(value => value.num),
+              itemStyle: {
+                normal: {
+                  color: new echarts.graphic.LinearGradient(
+                    0, 0, 0, 1,
+                    [
+                      {offset: 0, color: "#38ef7d"},
+                      {offset: 0.8, color: "#0ba84c"}
+                    ]
+                  )
+                }
+              }
+            }
+          ]
+        };
+        myChart.setOption(option);
       },
       // 广告点击量排名
       getAdPlanClickRanking () {
@@ -114,7 +141,7 @@
             _this.chartLoading = false;
             let data = response.data;
             _this.adPlanClickRanking = data.list;
-            _this.initAdChart();
+            _this.$nextTick(() => _this.initChart());
           });
       },
       // 广告列表
@@ -166,19 +193,10 @@
     width: 100%;
     height: 200px;
     background-color: #fff;
+  }
 
-    .chart__title {
-      height: 40px;
-      line-height: 40px;
-      font-size: 13px;
-      font-weight: 600;
-      padding: 0 10px;
-      background-color: #f6f6f6;
-    }
-
-    canvas {
-      width: 100%;
-      height: calc(100% - 40px);
-    }
+  #chartContainer {
+    width: 100%;
+    height: calc(100% - 30px);
   }
 </style>
